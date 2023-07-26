@@ -1,0 +1,11 @@
+.vscode
+
+*.lua
+!/lib/**/*.lua
+!/data/tiled/maps/**/*.lua
+
+*.ase
+*.aseprite
+
+*.tiled-project
+*.tiled-session
