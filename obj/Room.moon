@@ -1,9 +1,7 @@
-import tiny from require 'data.fonts'
 import colour from require 'help.graphics'
 
 LayeredManager = require 'obj.manager.LayeredManager'
 State = require 'obj.state_machine.State'
-Input = require 'obj.Input'
 CameraController = require 'obj.CameraController'
 
 gamera = require 'lib.gamera'
@@ -16,26 +14,6 @@ class Room extends State
 		@background_colour = { 0, 0, 0 }
 
 		@members = LayeredManager!
-		-- maybe sometime I'll have this read from the save file before
-		-- defaulting back to regular inputs
-		@input = @members\add(Input(@, {
-			controls: {
-				'z'
-				'x'
-				'c'
-
-				'left'
-				'right'
-				'up'
-				'down'
-			}
-
-			pairs: {
-				move: { 'left', 'right', 'up', 'down' }
-			}
-
-			deadzone: 0.2
-		}))
 
 		@camera = gamera.new(-math.huge, -math.huge, math.huge, math.huge)
 		@camera_controller = @add(CameraController, @camera)
