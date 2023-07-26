@@ -43,4 +43,7 @@ export INSPECT = require 'lib.inspect'
 --
 
 StateMachine = require 'obj.state_machine.StateMachine'
+ImageCache = require 'obj.ImageCache'
+
 export STAGE = StateMachine!
+export IMAGE = ImageCache!
