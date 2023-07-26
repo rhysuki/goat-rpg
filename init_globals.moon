@@ -15,7 +15,7 @@ export L = love
 export LG = love.graphics
 
 export SCALE = 1
-export SCREEN_WIDTH, SCREEN_HEIGHT = 240, 200
+export SCREEN_WIDTH, SCREEN_HEIGHT = 256, 192
 export WINDOW_WIDTH, WINDOW_HEIGHT = SCREEN_WIDTH, SCREEN_HEIGHT
 
 export DEBUG_FLAGS = {
