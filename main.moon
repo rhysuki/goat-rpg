@@ -26,12 +26,10 @@ love.load = ->
 		}
 	)
 
-	require 'init_specs'
-
 	print("=======================================================")
 
-	LG.setFont(require('data.fonts').rpg)
-	STAGE\goto(require('obj.room.Overworld')('*/test1.lua'))
+	LG.setFont(require('data.fonts').tiny)
+	STAGE\goto(require('obj.room.Overworld')!)
 	resize(2)
 
 love.update = (dt) ->
