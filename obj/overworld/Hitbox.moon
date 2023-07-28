@@ -23,7 +23,7 @@ class Hitbox extends GameObject
 		@filter = args.filter
 
 		@debug_colour = 'white'
-		@debug_alpha = 0.8
+		@debug_alpha = 0.5
 
 		@world\add(@, @pos.x, @pos.y, @pos.w, @pos.h)
 

@@ -9,6 +9,7 @@ class Player extends Hitbox
 		-- how many pixels to move per frame
 		@speed = 1
 		@facing_direction = 'down'
+		@debug_colour = 'b_pink'
 
 		@input = baton.new({
 			controls: {
