@@ -37,14 +37,14 @@ class Player extends Hitbox
 
 	draw: =>
 		super!
-		r = 0
+		offset = 8
+		r = switch @facing_direction
+			when 'down' then 0
+			when 'left' then math.pi * 0.5
+			when 'up' then math.pi
+			when 'right' then math.pi * 1.5
 
-		if @facing_direction == 'down' then r = 0
-		if @facing_direction == 'left' then r = math.pi * 0.5
-		if @facing_direction == 'up' then r = math.pi
-		if @facing_direction == 'right' then r = math.pi * 1.5
-
-		LG.draw(@arrow, @pos.x + 8, @pos.y + 8, r, 1, 1, 8, 8)
+		LG.draw(@arrow, @pos.x + offset, @pos.y + offset, r, 1, 1, offset, offset)
 
 	--
 
@@ -63,6 +63,8 @@ class Player extends Hitbox
 		-- hold up, then hold left makes frisk face left
 		-- ^ but... if you let go of up, left would be the held direction.
 		-- lone held direction = lower priority?
+		-- actually I just looked at it again and I think it's the other
+		-- way around
 		x_move, y_move = @input\get('move')
 
 		if x_move > 0 then @facing_direction = 'right'
