@@ -8,6 +8,7 @@ class Player extends Hitbox
 
 		-- how many pixels to move per frame
 		@speed = 1
+		@facing_direction = 'down'
 
 		@input = baton.new({
 			controls: {
@@ -24,10 +25,26 @@ class Player extends Hitbox
 			}
 		})
 
+		@arrow = IMAGE\new_image('*/arrow.png')
+
 	update: (dt) =>
 		super(dt)
 		@input\update!
 
+		-- update facing direction
+		-- todo: how's undertale do it? like, the first direction you
+		-- press is lower priority for diagonals.
+		-- eg hold left, then hold up makes frisk face up
+		-- hold up, then hold left makes frisk face left
+		x_move, y_move = @input\get('move')
+
+		if x_move > 0 then @facing_direction = 'right'
+		elseif x_move < 0 then @facing_direction = 'left'
+		elseif y_move < 0 then @facing_direction = 'up'
+		elseif y_move > 0 then @facing_direction = 'down'
+		-- do nothing if there's no input
+
+		-- move
 		x_move, y_move = @input\get('move')
 
 		@move_to(
@@ -37,4 +54,11 @@ class Player extends Hitbox
 
 	draw: =>
 		super!
-		LG.print(':3', @pos.x, @pos.y)
+		r = 0
+
+		if @facing_direction == 'down' then r = 0
+		if @facing_direction == 'left' then r = math.pi * 0.5
+		if @facing_direction == 'up' then r = math.pi
+		if @facing_direction == 'right' then r = math.pi * 1.5
+
+		LG.draw(@arrow, @pos.x + 8, @pos.y + 8, r, 1, 1, 8, 8)
