@@ -6,6 +6,9 @@ class Player extends Hitbox
 	new: (room, args = {}) =>
 		super(room, args)
 
+		-- how many pixels to move per frame
+		@speed = 1
+
 		@input = baton.new({
 			controls: {
 				left: { 'key:left', 'axis:leftx-' }
@@ -24,6 +27,13 @@ class Player extends Hitbox
 	update: (dt) =>
 		super(dt)
 		@input\update!
+
+		x_move, y_move = @input\get('move')
+
+		@move_to(
+			@pos.x + (x_move * @speed * dt * 60)
+			@pos.y + (y_move * @speed * dt * 60)
+		)
 
 	draw: =>
 		super!
