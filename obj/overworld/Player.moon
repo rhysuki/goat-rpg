@@ -31,26 +31,7 @@ class Player extends Hitbox
 		super(dt)
 		@input\update!
 
-		-- update facing direction
-		-- todo: how's undertale do it? like, the first direction you
-		-- press is lower priority for diagonals.
-		-- eg hold left, then hold up makes frisk face up
-		-- hold up, then hold left makes frisk face left
-		x_move, y_move = @input\get('move')
-
-		if x_move > 0 then @facing_direction = 'right'
-		elseif x_move < 0 then @facing_direction = 'left'
-		elseif y_move < 0 then @facing_direction = 'up'
-		elseif y_move > 0 then @facing_direction = 'down'
-		-- do nothing if there's no input
-
-		-- move
-		x_move, y_move = @input\get('move')
-
-		@move_to(
-			@pos.x + (x_move * @speed * dt * 60)
-			@pos.y + (y_move * @speed * dt * 60)
-		)
+		@move(dt)
 
 	draw: =>
 		super!
@@ -62,3 +43,13 @@ class Player extends Hitbox
 		if @facing_direction == 'right' then r = math.pi * 1.5
 
 		LG.draw(@arrow, @pos.x + 8, @pos.y + 8, r, 1, 1, 8, 8)
+
+	--
+
+	move: (dt) =>
+		x_move, y_move = @input\get('move')
+
+		@move_to(
+			@pos.x + (x_move * @speed * dt * 60)
+			@pos.y + (y_move * @speed * dt * 60)
+		)
