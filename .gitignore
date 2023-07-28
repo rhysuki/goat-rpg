@@ -4,6 +4,8 @@
 !/lib/**/*.lua
 !/data/tiled/maps/**/*.lua
 
+/gif/**/*
+
 *.ase
 *.aseprite
 
