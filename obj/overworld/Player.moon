@@ -1,9 +1,14 @@
+import safe_copy from require 'help.table'
+
 Hitbox = require 'obj.overworld.Hitbox'
 
 baton = require 'lib.baton'
 
 class Player extends Hitbox
 	new: (room, args = {}) =>
+		args = safe_copy({
+			pos: { w: 15, h: 15 }
+		}, args)
 		super(room, args)
 
 		-- how many pixels to move per frame
