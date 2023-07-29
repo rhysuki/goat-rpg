@@ -1,6 +1,7 @@
 -- a peachy instance, but it's a gameobject.
 
 import safe_copy from require 'help.table'
+import asterisk_complete from require 'help.string'
 
 GameObject = require 'obj.GameObject'
 Image = require 'module.Image'
@@ -60,4 +61,5 @@ class Peachy extends GameObject
 	--- pass in a path without extensions, eg 'path/to/example'
 	-- @treturn string, string
 	get_paths: (path) =>
+		path = asterisk_complete(path, 'data/img')
 		return path .. '.json', path .. '.png'
