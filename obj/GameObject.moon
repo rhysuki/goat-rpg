@@ -1,4 +1,17 @@
 class GameObject
+	-- gets called when this comes from a tiled object.
+	-- @treturn obj
+	from_tiled_object: (room, object) =>
+		return @(room, @tiled_object_to_args(room, object))
+
+	-- extend this to change how arg tables are generated, like so:
+	-- 		out = super(room, object)
+	-- 		out.new_key = new_value
+	-- 		return out
+	-- @treturn tab
+	tiled_object_to_args: (room, object) =>
+		return { pos: { x: object.x, y: object.y }}
+
 	new: (room, args = {}) =>
 		@room = room
 		@members = room.members
