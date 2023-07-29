@@ -4,6 +4,14 @@ import colour from require 'help.graphics'
 GameObject = require 'obj.GameObject'
 
 class Hitbox extends GameObject
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.pos.w = object.width
+		out.pos.h = object.height
+
+		out.world = room.worlds[object.properties.world]
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			pos: {
