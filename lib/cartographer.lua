@@ -750,6 +750,11 @@ function Map:_loadImages()
 	self._images = {}
 	for _, tileset in ipairs(self.tilesets) do
 		if tileset.image then self:_loadImage(tileset.image) end
+
+		if tileset.tiles == nil then
+			error('tileset image missing in this map. remember to click the little "embed tileset" button.')
+		end
+
 		for _, tile in ipairs(tileset.tiles) do
 			if tile.image then self:_loadImage(tile.image) end
 		end
