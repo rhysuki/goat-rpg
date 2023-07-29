@@ -4,7 +4,6 @@ import safe_copy from require 'help.table'
 import asterisk_complete from require 'help.string'
 
 GameObject = require 'obj.GameObject'
-Image = require 'module.Image'
 
 peachy = require 'lib.peachy'
 
@@ -12,6 +11,14 @@ peachy = require 'lib.peachy'
 -- TODO: make @activate! toggle this state
 -- TODO: link this to a pubsub
 class Peachy extends GameObject
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.path = object.properties.path
+		out.initial_tag = object.properties.initial_tag
+
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			-- path without extensions!
@@ -32,9 +39,9 @@ class Peachy extends GameObject
 		super(room, args)
 
 		json_path, image_path = @get_paths(args.path)
-		@peachy = peachy.new(json_path, Image(image_path), args.initial_tag)
+		@peachy = peachy.new(json_path, IMAGE\new_image(image_path), args.initial_tag)
 
-		@is_looping = false
+		@is_looping = true
 
 		@peachy\onLoop(-> @on_loop!)
 
