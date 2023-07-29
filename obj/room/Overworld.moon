@@ -10,8 +10,10 @@ class Overworld extends Room
 	new: =>
 		super!
 
-		@world = bump.newWorld!
 
+		@worlds = {
+			collision: bump.newWorld!
+		}
 
-		@add(Map, @world, '*/test.lua')
-		@add(Player, { world: @world })
+		@add(Map, @worlds.collision, '*/test.lua')
+		@add(Player, { world: @worlds.collision, pos: { x: 148, y: 48 }})
