@@ -4,8 +4,8 @@
 Hitbox = require 'obj.Hitbox'
 
 class AreaTrigger extends Hitbox
-	new: (room, world, args = {}) =>
-		super(room, world, args)
+	new: (room, args = {}) =>
+		super(room, args)
 
 		@current_others = {}
 		@last_others = {}
