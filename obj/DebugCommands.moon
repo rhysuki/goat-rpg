@@ -16,6 +16,12 @@ class DebugCommands extends GameObject
 			}
 		})
 
+		@key = {
+			switch_hitboxes: 'show_hitboxes'
+			switch_positions: 'show_positions'
+			switch_frame_info: 'show_frame_info'
+		}
+
 		@is_modifier_enabled = false
 
 	update: (dt) =>
@@ -26,15 +32,10 @@ class DebugCommands extends GameObject
 			@is_modifier_enabled = not @is_modifier_enabled
 
 		if @is_modifier_enabled
-			if @input\pressed('switch_hitboxes')
-				DEBUG_FLAGS.show_hitboxes = not DEBUG_FLAGS.show_hitboxes
-				@is_modifier_enabled = false
-			if @input\pressed('switch_positions')
-				DEBUG_FLAGS.show_positions = not DEBUG_FLAGS.show_positions
-				@is_modifier_enabled = false
-			if @input\pressed('switch_frame_info')
-				DEBUG_FLAGS.show_frame_info = not DEBUG_FLAGS.show_frame_info
-				@is_modifier_enabled = false
+			for input, flag in pairs @key
+				if @input\pressed(input)
+					DEBUG_FLAGS[flag] = not DEBUG_FLAGS[flag]
+					@is_modifier_enabled = false
 
 	draw: =>
 		super!
