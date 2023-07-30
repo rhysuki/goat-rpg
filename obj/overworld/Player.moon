@@ -8,7 +8,7 @@ baton = require 'lib.baton'
 class Player extends Hitbox
 	new: (room, args = {}) =>
 		args = safe_copy({
-			pos: { w: 15, h: 15 }
+			pos: { w: 12, h: 15 }
 		}, args)
 		super(room, args)
 
@@ -46,8 +46,8 @@ class Player extends Hitbox
 		@animation_state = @is_moving! and 'walk' or 'idle'
 		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
 
-		@sprite.pos.x = @pos.x
-		@sprite.pos.y = @pos.y
+		@sprite.pos.x = @pos.x - 2
+		@sprite.pos.y = @pos.y - 1
 
 	draw: =>
 		super!
