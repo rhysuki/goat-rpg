@@ -1,6 +1,7 @@
 import safe_copy from require 'help.table'
 
 Hitbox = require 'obj.overworld.Hitbox'
+AreaTrigger = require 'obj.overworld.AreaTrigger'
 Peachy = require 'obj.Peachy'
 
 baton = require 'lib.baton'
@@ -8,8 +9,14 @@ baton = require 'lib.baton'
 class Player extends Hitbox
 	new: (room, args = {}) =>
 		args = safe_copy({
-			pos: { w: 12, h: 15 }
+			interaction_world: nil
+
+			pos: {
+				w: 12
+				h: 15
+			}
 		}, args)
+
 		super(room, args)
 
 		-- how many pixels to move per frame
@@ -34,6 +41,13 @@ class Player extends Hitbox
 		})
 
 		@sprite = @room\add(Peachy, { path: '*/goat', initial_tag: 'idle_down' })
+		@area_trigger = @room\add(AreaTrigger, {
+			world: args.interaction_world
+			pos: {
+				w: @pos.w
+				h: @pos.h
+			}
+		})
 
 	update: (dt) =>
 		super(dt)
@@ -64,6 +78,8 @@ class Player extends Hitbox
 			@pos.x + (x_move * @speed * dt * 60)
 			@pos.y + (y_move * @speed * dt * 60)
 		)
+
+		@area_trigger\move_to(@pos.x, @pos.y)
 
 	update_facing_direction: =>
 		-- TODO: how's undertale do it? like, the first direction you
