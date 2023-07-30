@@ -3,6 +3,7 @@ import colour from require 'help.graphics'
 LayeredManager = require 'obj.manager.LayeredManager'
 State = require 'obj.state_machine.State'
 CameraController = require 'obj.CameraController'
+DebugCommands = require 'obj.DebugCommands'
 
 gamera = require 'lib.gamera'
 
@@ -19,6 +20,8 @@ class Room extends State
 		@camera_controller = @add(CameraController, @camera)
 
 		@camera\setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+		@members\add(DebugCommands(@), 1000)
 
 	update: (dt) =>
 		@members\update(dt)
