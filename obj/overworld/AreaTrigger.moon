@@ -1,7 +1,7 @@
 -- Hitbox without collision. constantly updates its own @cols and has
 -- funcs for enter/stay/exit.
 
-Hitbox = require 'obj.Hitbox'
+Hitbox = require 'obj.overworld.Hitbox'
 
 class AreaTrigger extends Hitbox
 	new: (room, args = {}) =>

@@ -32,6 +32,7 @@ class Hitbox extends GameObject
 		@world = args.world
 		@filter = args.filter
 
+		@cols = {}
 		@debug_colour = 'white'
 		@debug_alpha = 0.5
 
