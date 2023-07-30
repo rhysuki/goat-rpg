@@ -12,6 +12,8 @@ class Hitbox extends GameObject
 
 		out.world = room.worlds[object.properties.world]
 
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			pos: {
