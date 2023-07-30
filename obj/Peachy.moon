@@ -65,8 +65,15 @@ class Peachy extends GameObject
 	set_tag: (name) =>
 		@peachy\setTag(name)
 
+	set_frame: (frame_index) =>
+		@peachy\setFrame(frame_index)
+
 	--- pass in a path without extensions, eg 'path/to/example'
 	-- @treturn string, string
 	get_paths: (path) =>
 		path = asterisk_complete(path, 'data/img')
 		return path .. '.json', path .. '.png'
+
+	-- @treturn int
+	get_frame: =>
+		return @peachy.frameIndex
