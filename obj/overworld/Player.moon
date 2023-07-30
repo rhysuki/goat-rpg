@@ -33,12 +33,11 @@ class Player extends Hitbox
 			}
 		})
 
-		@sprite = Peachy(@room, { path: '*/goat', initial_tag: 'idle_down' })
+		@sprite = @room\add(Peachy, { path: '*/goat', initial_tag: 'idle_down' })
 
 	update: (dt) =>
 		super(dt)
 		@input\update(dt)
-		@sprite\update(dt)
 
 		@update_facing_direction!
 		@move(dt)
@@ -51,9 +50,12 @@ class Player extends Hitbox
 
 	draw: =>
 		super!
-		@sprite\draw!
 
 	--
+
+	die: =>
+		super!
+		@sprite\die!
 
 	move: (dt) =>
 		x_move, y_move = @input\get('move')
