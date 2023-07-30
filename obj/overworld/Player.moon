@@ -44,7 +44,7 @@ class Player extends Hitbox
 		@move(dt)
 
 		@animation_state = @is_moving! and 'walk' or 'idle'
-		@sprite\play_tag(@animation_state .. '_down')
+		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
 
 		@sprite.pos.x = @pos.x
 		@sprite.pos.y = @pos.y
