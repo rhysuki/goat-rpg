@@ -74,3 +74,11 @@ class Player extends Hitbox
 		elseif y_move < 0 then @facing_direction = 'up'
 		elseif y_move > 0 then @facing_direction = 'down'
 		else return
+
+	-- are any of the movement buttons pressed?
+	-- @treturn bool
+	is_moving: =>
+		x_move, y_move = @input\get('move')
+
+		if x_move != 0 or y_move != 0 then return true
+		return false
