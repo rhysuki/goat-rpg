@@ -1,6 +1,7 @@
 import safe_copy from require 'help.table'
 
 Hitbox = require 'obj.overworld.Hitbox'
+Peachy = require 'obj.Peachy'
 
 baton = require 'lib.baton'
 
@@ -31,7 +32,7 @@ class Player extends Hitbox
 			}
 		})
 
-		@arrow = IMAGE\new_image('*/arrow.png')
+		@sprite = Peachy(@room, { path: '*/goat', initial_tag: 'idle_down' })
 
 	update: (dt) =>
 		super(dt)
@@ -40,16 +41,12 @@ class Player extends Hitbox
 		@update_facing_direction!
 		@move(dt)
 
+		@sprite.pos.x = @pos.x
+		@sprite.pos.y = @pos.y
+
 	draw: =>
 		super!
-		offset = 8
-		r = switch @facing_direction
-			when 'down' then 0
-			when 'left' then math.pi * 0.5
-			when 'up' then math.pi
-			when 'right' then math.pi * 1.5
-
-		LG.draw(@arrow, @pos.x + offset, @pos.y + offset, r, 1, 1, offset, offset)
+		@sprite\draw!
 
 	--
 
