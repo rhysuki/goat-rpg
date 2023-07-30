@@ -15,6 +15,7 @@ class Player extends Hitbox
 		-- how many pixels to move per frame
 		@speed = 1
 		@facing_direction = 'down'
+		@animation_state = 'idle'
 		@debug_colour = 'b_pink'
 
 		@input = baton.new({
@@ -36,10 +37,14 @@ class Player extends Hitbox
 
 	update: (dt) =>
 		super(dt)
-		@input\update!
+		@input\update(dt)
+		@sprite\update(dt)
 
 		@update_facing_direction!
 		@move(dt)
+
+		@animation_state = @is_moving! and 'walk' or 'idle'
+		@sprite\play_tag(@animation_state .. '_down')
 
 		@sprite.pos.x = @pos.x
 		@sprite.pos.y = @pos.y
