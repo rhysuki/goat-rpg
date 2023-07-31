@@ -18,4 +18,9 @@ class Overworld extends Room
 		}
 
 		@add(Map, @worlds.collision, '*/test.lua')
-		@add(Player, { world: @worlds.collision, pos: { x: 148, y: 48 }})
+		@add(Player, {
+			world: @worlds.collision,
+			interaction_world: @worlds.interaction
+
+			pos: { x: 148, y: 48 }
+		})
