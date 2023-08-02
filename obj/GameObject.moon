@@ -22,10 +22,15 @@ class GameObject
 		@is_active = true
 		@is_visible = true
 		@is_dead = false
+		@is_auto_draw_depth_enabled = true
+		-- the y offset between @pos.y and the "foot" of this object.
+		@depth_height = 0
 
 		@time_created = L.timer.getTime!
 
 	update: (dt) =>
+		if @is_auto_draw_depth_enabled
+			@draw_depth = @get_auto_draw_depth!
 
 	draw: =>
 
@@ -38,3 +43,7 @@ class GameObject
 		@is_active = false
 		@is_visible = false
 		@is_dead = true
+
+	-- @treturn number
+	get_auto_draw_depth: =>
+		return (@pos.y + @depth_height) / 100
