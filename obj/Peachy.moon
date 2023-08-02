@@ -2,6 +2,7 @@
 
 import safe_copy from require 'help.table'
 import asterisk_complete from require 'help.string'
+import colour from require 'help.graphics'
 
 GameObject = require 'obj.GameObject'
 
@@ -42,16 +43,25 @@ class Peachy extends GameObject
 		@peachy = peachy.new(json_path, IMAGE\new_image(image_path), args.initial_tag)
 
 		@is_looping = true
+		@is_auto_draw_depth_enabled = true
 
 		@peachy\onLoop(-> @on_loop!)
 
 	update: (dt) =>
 		super(dt)
 		@peachy\update(dt)
+		if @is_auto_draw_depth_enabled
+			_, _, _, quad_height = @peachy.frame.quad\getViewport!
+			@depth_height = quad_height
 
 	draw: =>
 		with @pos
 			@peachy\draw(.x, .y, .r, .sx, .sy, .ox, .oy)
+
+			if DEBUG_FLAGS.show_positions
+				colour('b_green')
+				LG.print(@draw_depth, .x - 3, .y - 12)
+				colour!
 
 	--
 
