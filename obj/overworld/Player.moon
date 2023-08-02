@@ -20,7 +20,7 @@ class Player extends Hitbox
 		super(room, args)
 
 		-- how many pixels to move per frame
-		@speed = 1
+		@speed = 1.2
 		@facing_direction = 'down'
 		@animation_state = 'idle'
 		@debug_colour = 'b_pink'
@@ -45,7 +45,7 @@ class Player extends Hitbox
 			world: args.interaction_world
 			pos: {
 				w: @pos.w
-				h: @pos.h
+				h: 4
 			}
 		})
 
@@ -79,7 +79,8 @@ class Player extends Hitbox
 			@pos.y + (y_move * @speed * dt * 60)
 		)
 
-		@area_trigger\move_to(@pos.x, @pos.y)
+		-- place the area trigger at the foot of this hitbox
+		@area_trigger\move_to(@pos.x, @pos.y + @pos.h - @area_trigger.pos.h)
 
 	update_facing_direction: =>
 		-- TODO: how's undertale do it? like, the first direction you
