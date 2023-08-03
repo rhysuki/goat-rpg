@@ -27,6 +27,9 @@ class Interactible extends Hitbox
 
 	--
 
+	activate: =>
+		print 'i have been activated!'
+
 	die: =>
 		super!
 		@area_trigger\die!
