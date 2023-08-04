@@ -57,10 +57,7 @@ class Player extends Hitbox
 		@move(dt)
 
 		@animation_state = @is_moving! and 'walk' or 'idle'
-		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
-
-		@sprite.pos.x = @pos.x - 2
-		@sprite.pos.y = @pos.y - 1
+		@update_sprite!
 
 	draw: =>
 		super!
@@ -98,6 +95,12 @@ class Player extends Hitbox
 		elseif y_move < 0 then @facing_direction = 'up'
 		elseif y_move > 0 then @facing_direction = 'down'
 		else return
+
+	update_sprite: =>
+		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
+
+		@sprite.pos.x = @pos.x - 2
+		@sprite.pos.y = @pos.y - 1
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
