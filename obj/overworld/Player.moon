@@ -1,8 +1,10 @@
 import safe_copy from require 'help.table'
+import is from require 'help.type'
 
 Hitbox = require 'obj.overworld.Hitbox'
 AreaTrigger = require 'obj.overworld.AreaTrigger'
 Peachy = require 'obj.Peachy'
+Interactible = require 'obj.overworld.Interactible'
 
 baton = require 'lib.baton'
 
@@ -59,6 +61,8 @@ class Player extends Hitbox
 		@animation_state = @is_moving! and 'walk' or 'idle'
 		@update_sprite!
 
+		@check_interactibles!
+
 	draw: =>
 		super!
 
@@ -101,6 +105,14 @@ class Player extends Hitbox
 
 		@sprite.pos.x = @pos.x - 2
 		@sprite.pos.y = @pos.y - 1
+
+	check_interactibles: =>
+		for col in *@area_trigger.cols
+			context = col.other.context
+
+			if not context or not is(context, Interactible) then continue
+
+			if @input\pressed('interact') then context\activate!
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
