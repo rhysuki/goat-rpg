@@ -26,3 +26,20 @@ class Actor extends GameObject
 				pos: { w: .hitbox.pos.w, h: .hitbox.pos.h }
 				world: args.world
 			})
+
+	update: (dt) =>
+		super(dt)
+		@move_hitbox!
+		@move_sprite!
+
+	--
+
+	move_hitbox: =>
+		@hitbox\move_to(@pos.x, @pos.y)
+
+	-- the sprite's attached to the middle of the bottom of the hitbox.
+	move_sprite: =>
+		x, y, w, h = @sprite\get_size!
+
+		@sprite.pos.x = @hitbox.pos.x + (@hitbox.pos.w / 2) - (w / 2)
+		@sprite.pos.y = @hitbox.pos.y + @hitbox.pos.h - h
