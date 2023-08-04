@@ -5,6 +5,7 @@ Map = require 'obj.overworld.Map'
 
 bump = require 'lib.bump'
 colours = require 'data.colours'
+pubsub = require 'lib.bat.pubsub'
 
 class Overworld extends Room
 	new: =>
@@ -15,6 +16,10 @@ class Overworld extends Room
 		@worlds = {
 			collision: bump.newWorld!
 			interaction: bump.newWorld!
+		}
+
+		@pubsubs = {
+			test: pubsub!
 		}
 
 		@add(Map, @worlds.collision, '*/test.lua')
