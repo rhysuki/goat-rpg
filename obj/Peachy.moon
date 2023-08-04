@@ -87,3 +87,8 @@ class Peachy extends GameObject
 	-- @treturn int
 	get_frame: =>
 		return @peachy.frameIndex
+
+	-- size of the current frame. or um, I guess all frames?
+	-- @treturn int, int, int, int
+	get_size: =>
+		return @peachy.frame.quad\getViewport!
