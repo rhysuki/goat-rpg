@@ -10,15 +10,24 @@ class Interactible extends Hitbox
 		out.interaction_world = room.worlds[object.properties.interaction_world] or
 			room.worlds.interaction
 
+		out.pubsub = room.pubsubs[object.properties.pubsub]
+		out.pubsub_event = object.properties.pubsub_event
+
 		return out
 
 	new: (room, args = {}) =>
 		args = safe_copy({
 			interaction_world: nil
 			area_trigger_extrude_size: 4
+
+			pubsub: nil
+			pubsub_event: 'empty'
 		}, args)
 
 		super(room, args)
+
+		@pubsub = args.pubsub
+		@pubsub_event = args.pubsub_event
 
 		es = args.area_trigger_extrude_size
 
@@ -39,7 +48,7 @@ class Interactible extends Hitbox
 	--
 
 	activate: =>
-		print 'i have been activated!'
+		@pubsub\publish(@pubsub_event, @)
 
 	die: =>
 		super!
