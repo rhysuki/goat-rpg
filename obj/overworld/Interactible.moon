@@ -4,6 +4,14 @@ Hitbox = require 'obj.overworld.Hitbox'
 AreaTrigger = require 'obj.overworld.AreaTrigger'
 
 class Interactible extends Hitbox
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.interaction_world = room.worlds[object.properties.interaction_world] or
+			room.worlds.interaction
+
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			interaction_world: nil
@@ -24,6 +32,9 @@ class Interactible extends Hitbox
 
 			world: args.interaction_world
 		})
+
+		-- TODO: should this be an official feature of hitbox?
+		@area_trigger.context = @
 
 	--
 
