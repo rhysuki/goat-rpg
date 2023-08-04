@@ -1,6 +1,7 @@
 import safe_copy from require 'help.table'
 import is from require 'help.type'
 
+Actor = require 'obj.overworld.Actor'
 Hitbox = require 'obj.overworld.Hitbox'
 AreaTrigger = require 'obj.overworld.AreaTrigger'
 Peachy = require 'obj.Peachy'
@@ -8,15 +9,11 @@ Interactible = require 'obj.overworld.Interactible'
 
 baton = require 'lib.baton'
 
-class Player extends Hitbox
+class Player extends Actor
 	new: (room, args = {}) =>
 		args = safe_copy({
 			interaction_world: nil
-
-			pos: {
-				w: 12
-				h: 7
-			}
+			actor_name: 'goat'
 		}, args)
 
 		super(room, args)
@@ -42,11 +39,10 @@ class Player extends Hitbox
 			}
 		})
 
-		@sprite = @room\add(Peachy, { path: '*/goat', initial_tag: 'idle_down' })
 		@area_trigger = @room\add(AreaTrigger, {
 			world: args.interaction_world
 			pos: {
-				w: @pos.w
+				w: @hitbox.pos.w
 				h: 4
 			}
 		})
@@ -63,25 +59,24 @@ class Player extends Hitbox
 
 		@check_interactibles!
 
-	draw: =>
-		super!
-
 	--
-
-	die: =>
-		super!
-		@sprite\die!
 
 	move: (dt) =>
 		x_move, y_move = @input\get('move')
 
-		@move_to(
-			@pos.x + (x_move * @speed * dt * 60)
-			@pos.y + (y_move * @speed * dt * 60)
-		)
+		@pos.x += (x_move * @speed * dt * 60)
+		@pos.y += (y_move * @speed * dt * 60)
+
+		@hitbox\move_to(@pos.x, @pos.y)
+
+		@pos.x = @hitbox.pos.x
+		@pos.y = @hitbox.pos.y
 
 		-- place the area trigger at the foot of this hitbox
-		@area_trigger\move_to(@pos.x, @pos.y + @pos.h - @area_trigger.pos.h)
+		@area_trigger\move_to(
+			@hitbox.pos.x
+			@hitbox.pos.y + @hitbox.pos.h - @area_trigger.pos.h
+		)
 
 	update_facing_direction: =>
 		-- TODO: how's undertale do it? like, the first direction you
@@ -102,9 +97,6 @@ class Player extends Hitbox
 
 	update_sprite: =>
 		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
-
-		@sprite.pos.x = @pos.x - 2
-		@sprite.pos.y = @pos.y - 9
 
 	check_interactibles: =>
 		for col in *@area_trigger.cols
