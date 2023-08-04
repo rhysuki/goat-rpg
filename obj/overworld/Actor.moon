@@ -23,6 +23,6 @@ class Actor extends GameObject
 			})
 
 			@hitbox = @room\add(Hitbox, {
-				pos: { w: .hitbox.w, h: .hitbox.h }
+				pos: { w: .hitbox.pos.w, h: .hitbox.pos.h }
 				world: args.world
 			})
