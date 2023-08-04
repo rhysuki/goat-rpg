@@ -34,6 +34,11 @@ class Actor extends GameObject
 
 	--
 
+	die: =>
+		super!
+		@sprite\die!
+		@hitbox\die!
+
 	move_hitbox: =>
 		@hitbox\move_to(@pos.x, @pos.y)
 
