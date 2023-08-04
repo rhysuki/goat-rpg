@@ -15,7 +15,7 @@ class Player extends Hitbox
 
 			pos: {
 				w: 12
-				h: 15
+				h: 7
 			}
 		}, args)
 
@@ -104,7 +104,7 @@ class Player extends Hitbox
 		@sprite\play_tag(@animation_state .. '_' .. @facing_direction)
 
 		@sprite.pos.x = @pos.x - 2
-		@sprite.pos.y = @pos.y - 1
+		@sprite.pos.y = @pos.y - 9
 
 	check_interactibles: =>
 		for col in *@area_trigger.cols
