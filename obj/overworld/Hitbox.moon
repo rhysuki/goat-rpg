@@ -10,7 +10,8 @@ class Hitbox extends GameObject
 		out.pos.w = object.width
 		out.pos.h = object.height
 
-		out.world = room.worlds[object.properties.world]
+		out.world = room.worlds[object.properties.world] or
+			room.worlds.collision
 
 		return out
 
