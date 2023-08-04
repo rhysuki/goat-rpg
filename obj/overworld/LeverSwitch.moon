@@ -4,6 +4,14 @@ Hitbox = require 'obj.overworld.Hitbox'
 Peachy = require 'obj.Peachy'
 
 class LeverSwitch extends Hitbox
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.initial_tag = object.properties.initial_tag
+		out.sprite_path = object.properties.sprite_path
+
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			initial_tag: nil
