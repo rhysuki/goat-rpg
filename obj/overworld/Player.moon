@@ -108,11 +108,8 @@ class Player extends Hitbox
 
 	check_interactibles: =>
 		for col in *@area_trigger.cols
-			context = col.other.context
-
-			if not context or not is(context, Interactible) then continue
-
-			if @input\pressed('interact') then context\activate!
+			if not is(col.other, Interactible) then continue
+			if @input\pressed('interact') then col.other\activate!
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool

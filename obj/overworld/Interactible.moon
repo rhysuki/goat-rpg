@@ -1,13 +1,15 @@
+-- an AreaTrigger that emits an event when interacted with.
+
 import safe_copy from require 'help.table'
 
 Hitbox = require 'obj.overworld.Hitbox'
 AreaTrigger = require 'obj.overworld.AreaTrigger'
 
-class Interactible extends Hitbox
+class Interactible extends AreaTrigger
 	tiled_object_to_args: (room, object) =>
 		out = super(room, object)
 
-		out.interaction_world = room.worlds[object.properties.interaction_world] or
+		out.world = room.worlds[object.properties.world] or
 			room.worlds.interaction
 
 		out.pubsub = room.pubsubs[object.properties.pubsub]
@@ -17,9 +19,6 @@ class Interactible extends Hitbox
 
 	new: (room, args = {}) =>
 		args = safe_copy({
-			interaction_world: nil
-			area_trigger_extrude_size: 4
-
 			pubsub: nil
 			pubsub_event: 'empty'
 		}, args)
@@ -28,22 +27,6 @@ class Interactible extends Hitbox
 
 		@pubsub = args.pubsub
 		@pubsub_event = args.pubsub_event
-
-		es = args.area_trigger_extrude_size
-
-		@area_trigger = @room\add(AreaTrigger, {
-			pos: {
-				x: @pos.x - es
-				y: @pos.y - es
-				w: @pos.w + (es * 2)
-				h: @pos.h + (es * 2)
-			}
-
-			world: args.interaction_world
-		})
-
-		-- TODO: should this be an official feature of hitbox?
-		@area_trigger.context = @
 
 	--
 
