@@ -39,13 +39,8 @@ class Player extends Actor
 			}
 		})
 
-		@area_trigger = @room\add(AreaTrigger, {
-			world: args.interaction_world
-			pos: {
-				w: @hitbox.pos.w
-				h: 4
-			}
-		})
+		@area_trigger.pos.w = @hitbox.pos.w
+		@area_trigger.pos.h = @hitbox.pos.h
 
 	update: (dt) =>
 		super(dt)
@@ -71,6 +66,9 @@ class Player extends Actor
 
 		@pos.x = @hitbox.pos.x
 		@pos.y = @hitbox.pos.y
+
+	move_area_trigger: =>
+		super!
 
 		-- place the area trigger at the foot of this hitbox
 		@area_trigger\move_to(
@@ -100,8 +98,10 @@ class Player extends Actor
 
 	check_interactibles: =>
 		for col in *@area_trigger.cols
-			if not is(col.other, Interactible) then continue
-			if @input\pressed('interact') then col.other\activate!
+			context = col.other.context
+			if not context then continue
+			if context.activate and @input\pressed('interact')
+				context\activate!
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
