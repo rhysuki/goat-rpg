@@ -12,12 +12,15 @@ import to_file_path, asterisk_complete from require 'help.string'
 GameObject = require 'obj.GameObject'
 
 cartographer = require 'lib.cartographer'
+assert = require 'lib.bat.assert'
 
 class Map extends GameObject
 	new: (room, world, path) =>
 		super(room)
 
 		@path = asterisk_complete(path, 'data/tiled/maps')
+
+		assert(L.filesystem.getInfo(@path), "couldn't find map #{@path}.")
 
 		@world = world
 		@cartographer = cartographer.load('data/tiled/maps/test.lua')
