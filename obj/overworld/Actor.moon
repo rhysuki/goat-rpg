@@ -12,9 +12,11 @@ class Actor extends GameObject
 	tiled_object_to_args: (room, object) =>
 		out = super(room, object)
 
-		out.actor_name = object.properties.actor_name
-		out.world = room.worlds[object.properties.world] or
-			room.worlds.collision
+		with object.properties
+			out.actor_name = .actor_name
+			out.world = room.worlds[.world] or room.worlds.collision
+			out.interaction_world = room.worlds[.interaction_world] or
+				room.worlds.interaction
 
 		return out
 
