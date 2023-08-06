@@ -23,7 +23,7 @@ class Map extends GameObject
 		assert(L.filesystem.getInfo(@path), "couldn't find map #{@path}.")
 
 		@world = world
-		@cartographer = cartographer.load('data/tiled/maps/test.lua')
+		@cartographer = cartographer.load(@path)
 
 		@valid_layers = @get_valid_layers!
 
