@@ -8,6 +8,15 @@ Hitbox = require 'obj.overworld.Hitbox'
 actors = require 'data.actors'
 
 class Actor extends GameObject
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.actor_name = object.properties.actor_name
+		out.world = room.worlds[object.properties.world] or
+			room.worlds.collision
+
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			actor_name: ''
