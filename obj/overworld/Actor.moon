@@ -52,8 +52,8 @@ class Actor extends GameObject
 				context: @
 			})
 
-		@update_hitbox!
-		@update_area_trigger!
+		@hitbox\set_position(@pos.x, @pos.y)
+		@area_trigger\set_position(@pos.x - 3, @pos.y - 3)
 
 	update: (dt) =>
 		super(dt)
@@ -68,17 +68,6 @@ class Actor extends GameObject
 		@sprite\die!
 		@hitbox\die!
 		@area_trigger\die!
-
-	update_hitbox: =>
-		@hitbox.world\update(@hitbox, @pos.x, @pos.y)
-
-	update_area_trigger: =>
-		@area_trigger.world\update(
-			@area_trigger
-			@hitbox.pos.x - 3
-			@hitbox.pos.y - 3
-		)
-
 
 	move_hitbox: =>
 		@hitbox\move_to(@pos.x, @pos.y)
