@@ -29,7 +29,7 @@ love.load = ->
 	print("=======================================================")
 
 	LG.setFont(require('data.fonts').tiny)
-	STAGE\goto(require('obj.room.Overworld')!)
+	STAGE\goto(require('obj.room.Overworld')('*/test.lua'))
 	resize(2)
 
 love.update = (dt) ->
