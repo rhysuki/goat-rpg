@@ -27,6 +27,8 @@ class Actor extends GameObject
 				world: args.world
 			})
 
+		@update_hitbox!
+
 	update: (dt) =>
 		super(dt)
 		@move_hitbox!
@@ -38,6 +40,10 @@ class Actor extends GameObject
 		super!
 		@sprite\die!
 		@hitbox\die!
+
+	update_hitbox: =>
+		@hitbox.world\update(@hitbox, @pos.x, @pos.y)
+
 
 	move_hitbox: =>
 		@hitbox\move_to(@pos.x, @pos.y)
