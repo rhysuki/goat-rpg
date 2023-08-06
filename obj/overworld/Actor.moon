@@ -54,6 +54,7 @@ class Actor extends GameObject
 
 		@hitbox\set_position(@pos.x, @pos.y)
 		@area_trigger\set_position(@pos.x - 3, @pos.y - 3)
+		@move_sprite!
 
 	update: (dt) =>
 		super(dt)
