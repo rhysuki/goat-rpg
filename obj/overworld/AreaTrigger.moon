@@ -4,6 +4,15 @@
 Hitbox = require 'obj.overworld.Hitbox'
 
 class AreaTrigger extends Hitbox
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		-- goes to interaction instead of collision by default
+		out.world = room.worlds[object.properties.world] or
+			room.worlds.interaction
+
+		return out
+
 	new: (room, args = {}) =>
 		super(room, args)
 
