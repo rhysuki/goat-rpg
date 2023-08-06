@@ -36,6 +36,7 @@ class Actor extends GameObject
 			@hitbox = @room\add(Hitbox, {
 				pos: { w: .hitbox.pos.w, h: .hitbox.pos.h }
 				world: args.world
+				context: @
 			})
 
 			@area_trigger = @room\add(AreaTrigger, {
@@ -45,8 +46,8 @@ class Actor extends GameObject
 					w: @hitbox.pos.w + 6
 					h: @hitbox.pos.h + 6
 				}
-
 				world: args.interaction_world
+				context: @
 			})
 
 		@update_hitbox!

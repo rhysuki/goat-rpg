@@ -26,12 +26,16 @@ class Hitbox extends GameObject
 
 			world: nil
 			filter: -> 'slide'
+
+			context: nil
 		}, args)
 
 		super(room, args)
 
 		@world = args.world
 		@filter = args.filter
+		-- the object this belongs to, if any.
+		@context = args.context
 
 		@cols = {}
 		@debug_colour = 'white'
