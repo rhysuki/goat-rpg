@@ -22,7 +22,7 @@ class Interactible extends Actor
 			interaction_world: nil
 
 			pubsub: nil
-			pubsub_event: 'empty'
+			pubsub_event: ''
 		}, args)
 
 		super(room, args)
