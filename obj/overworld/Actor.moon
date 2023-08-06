@@ -4,6 +4,7 @@ import safe_copy from require 'help.table'
 GameObject = require 'obj.GameObject'
 Peachy = require 'obj.Peachy'
 Hitbox = require 'obj.overworld.Hitbox'
+AreaTrigger = require 'obj.overworld.AreaTrigger'
 
 actors = require 'data.actors'
 
@@ -21,6 +22,7 @@ class Actor extends GameObject
 		args = safe_copy({
 			actor_name: ''
 			world: nil
+			interaction_world: nil
 		}, args)
 
 		super(room, args)
@@ -36,11 +38,24 @@ class Actor extends GameObject
 				world: args.world
 			})
 
+			@area_trigger = @room\add(AreaTrigger, {
+				pos: {
+					x: @hitbox.pos.x - 3
+					y: @hitbox.pos.y - 3
+					w: @hitbox.pos.w + 6
+					h: @hitbox.pos.h + 6
+				}
+
+				world: args.interaction_world
+			})
+
 		@update_hitbox!
+		@update_area_trigger!
 
 	update: (dt) =>
 		super(dt)
 		@move_hitbox!
+		@move_area_trigger!
 		@move_sprite!
 
 	--
@@ -49,13 +64,24 @@ class Actor extends GameObject
 		super!
 		@sprite\die!
 		@hitbox\die!
+		@area_trigger\die!
 
 	update_hitbox: =>
 		@hitbox.world\update(@hitbox, @pos.x, @pos.y)
 
+	update_area_trigger: =>
+		@area_trigger.world\update(
+			@area_trigger
+			@hitbox.pos.x - 3
+			@hitbox.pos.y - 3
+		)
+
 
 	move_hitbox: =>
 		@hitbox\move_to(@pos.x, @pos.y)
+
+	move_area_trigger: =>
+		@area_trigger\move_to(@hitbox.pos.x - 3, @hitbox.pos.y - 3)
 
 	-- the sprite's attached to the middle of the bottom of the hitbox.
 	move_sprite: =>
