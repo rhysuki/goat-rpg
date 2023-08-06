@@ -39,8 +39,7 @@ class Player extends Actor
 			}
 		})
 
-		@area_trigger.pos.w = @hitbox.pos.w
-		@area_trigger.pos.h = @hitbox.pos.h
+		@area_trigger\set_dimensions(@hitbox.pos.w, @hitbox.pos.h)
 
 	update: (dt) =>
 		super(dt)

@@ -8,13 +8,6 @@ class LeverSwitch extends Interactible
 
 		@is_on = false
 
-		-- TODO: player doesn't seem to need to touch area_triggers
-		-- to activate this?
-
-	update: (dt) =>
-		super(dt)
-		-- print #@area_trigger.cols
-
 	--
 
 	activate: =>
