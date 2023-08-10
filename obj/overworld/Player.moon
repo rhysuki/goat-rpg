@@ -39,6 +39,8 @@ class Player extends Actor
 			}
 		})
 
+		@camera_target = @room.camera_controller\add_target(@pos.x, @pos.y)
+
 		@area_trigger\set_dimensions(@hitbox.pos.w, @hitbox.pos.h)
 
 	update: (dt) =>
@@ -52,6 +54,8 @@ class Player extends Actor
 		@update_sprite!
 
 		@check_interactibles!
+
+		@camera_target.x, @camera_target.y = @pos.x, @pos.y
 
 	--
 
