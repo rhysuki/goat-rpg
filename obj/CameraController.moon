@@ -3,7 +3,7 @@
 
 import copy from require 'help.table'
 import colour from require 'help.graphics'
-import lerp from require 'lib.bat.mathx'
+import lerp, round from require 'lib.bat.mathx'
 
 GameObject = require 'obj.GameObject'
 
@@ -15,6 +15,8 @@ class CameraController extends GameObject
 
 		super(room, args)
 
+		@true_pos = { x: 0, y: 0 }
+
 		@camera = camera
 		@targets = {}
 		@smoothing = args.smoothing
@@ -23,12 +25,12 @@ class CameraController extends GameObject
 		super(dt)
 
 		mean_x, mean_y = @get_mean_target_position!
-		cam_x, cam_y = @camera\getPosition!
+		cam_x, cam_y = @true_pos.x, @true_pos.y
 
-		x = lerp(cam_x, mean_x, @smoothing)
-		y = lerp(cam_y, mean_y, @smoothing)
+		@true_pos.x = lerp(cam_x, mean_x, @smoothing)
+		@true_pos.y = lerp(cam_y, mean_y, @smoothing)
 
-		@camera\setPosition(x, y)
+		@camera\setPosition(round(@true_pos.x), round(@true_pos.y))
 
 	draw: =>
 		super!
