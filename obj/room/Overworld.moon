@@ -1,4 +1,4 @@
-Room = require 'obj.Room'
+Room = require 'obj.room.Room'
 Hitbox = require 'obj.overworld.Hitbox'
 Player = require 'obj.overworld.Player'
 Map = require 'obj.overworld.Map'
@@ -27,7 +27,7 @@ class Overworld extends Room
 			world: @worlds.collision,
 			interaction_world: @worlds.interaction
 
-			pos: { x: 148, y: 48 }
+			pos: { x: 108, y: 48 }
 		})
 
 		with @map.cartographer

@@ -1,7 +1,7 @@
 import colour from require 'help.graphics'
 import safe_copy from require 'help.table'
 
-Room = require 'obj.Room'
+Room = require 'obj.room.Room'
 GameObject = require 'obj.GameObject'
 
 circle = IMAGE\new_image('*/circle.png')
