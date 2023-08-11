@@ -7,6 +7,7 @@ class LeverSwitch extends Interactible
 		super(room, args)
 
 		@is_on = false
+		@sprite.is_looping = false
 
 	--
 
@@ -15,5 +16,5 @@ class LeverSwitch extends Interactible
 
 		@is_on = not @is_on
 
-		if @is_on then @sprite\play_tag('on')
-		else @sprite\play_tag('off')
+		if @is_on then @sprite\queue_tags('turn_on', 'on')
+		else @sprite\queue_tags('turn_off', 'off')
