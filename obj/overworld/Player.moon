@@ -106,6 +106,17 @@ class Player extends Actor
 			if context.activate and @input\pressed('interact')
 				context\activate!
 
+	-- is this player facing the given object?
+	-- @treturn bool
+	is_facing: (obj) =>
+		if ((@pos.x >= obj.pos.x) and (@facing_direction == 'left')) or
+			((@pos.x < obj.pos.x) and (@facing_direction == 'right')) or
+			((@pos.y >= obj.pos.y) and (@facing_direction == 'up')) or
+			((@pos.y < obj.pos.y) and (@facing_direction == 'down'))
+			return true
+
+		return false
+
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
 	is_moving: =>
