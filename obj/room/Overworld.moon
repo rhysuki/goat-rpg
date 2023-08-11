@@ -29,3 +29,6 @@ class Overworld extends Room
 
 			pos: { x: 148, y: 48 }
 		})
+
+		with @map.cartographer
+			@camera\setWorld(0, 0, .width * .tilewidth, .height * .tileheight)
