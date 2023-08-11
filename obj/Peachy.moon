@@ -44,6 +44,7 @@ class Peachy extends GameObject
 
 		@is_looping = true
 		@is_auto_draw_depth_enabled = true
+		@tag_queue = {}
 
 		@peachy\onLoop(-> @on_loop!)
 
@@ -66,6 +67,10 @@ class Peachy extends GameObject
 	--
 
 	on_loop: =>
+		if #@tag_queue > 0
+			@pop_tag_queue!
+			return
+
 		if not @is_looping then @peachy\stop(true)
 
 	play_tag: (name) =>
@@ -77,6 +82,22 @@ class Peachy extends GameObject
 
 	set_frame: (frame_index) =>
 		@peachy\setFrame(frame_index)
+
+	-- plays the given tags in sequence one after another.
+	queue_tags: (...) =>
+		-- for i = 1, select('#', ...)
+		-- 	INSERT(@tag_queue, select(i, ...)
+
+		tags = { ... }
+
+		for tag in *tags
+			INSERT(@tag_queue, tag)
+
+		@pop_tag_queue!
+
+	pop_tag_queue: =>
+		-- print table.remove(@tag_queue, 1)
+		@play_tag(table.remove(@tag_queue, 1))
 
 	--- pass in a path without extensions, eg 'path/to/example'
 	-- @treturn string, string
