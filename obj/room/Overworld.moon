@@ -32,3 +32,5 @@ class Overworld extends Room
 
 		with @map.cartographer
 			@camera\setWorld(0, 0, @map\get_dimensions!)
+
+		@camera_controller\snap_to_destination!
