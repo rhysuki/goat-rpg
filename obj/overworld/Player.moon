@@ -103,7 +103,7 @@ class Player extends Actor
 		for col in *@area_trigger.cols
 			context = col.other.context
 			if not context then continue
-			if context.activate and @input\pressed('interact')
+			if context.activate and @is_facing(context) and @input\pressed('interact')
 				context\activate!
 
 	-- is this player facing the given object?
