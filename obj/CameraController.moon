@@ -3,7 +3,7 @@
 
 import copy from require 'help.table'
 import colour from require 'help.graphics'
-import lerp, round from require 'lib.bat.mathx'
+import lerp, round, clamp from require 'lib.bat.mathx'
 
 GameObject = require 'obj.GameObject'
 
@@ -58,6 +58,14 @@ class CameraController extends GameObject
 		active_targets = [t for t in *@targets when t.is_active]
 
 		for { :x, :y } in *active_targets
+			x_min = @camera.w / 2
+			x_max = @camera.ww - (@camera.w / 2)
+			y_min = @camera.h / 2
+			y_max = @camera.wh - (@camera.h / 2)
+
+			x = clamp(x, x_min, x_max)
+			y = clamp(y, y_min, y_max)
+
 			sum_x += x
 			sum_y += y
 
