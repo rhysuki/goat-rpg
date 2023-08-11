@@ -15,8 +15,6 @@ class CameraController extends GameObject
 
 		super(room, args)
 
-		@true_pos = { x: 0, y: 0 }
-
 		@camera = camera
 		@targets = {}
 		@smoothing = args.smoothing
@@ -25,12 +23,12 @@ class CameraController extends GameObject
 		super(dt)
 
 		mean_x, mean_y = @get_mean_target_position!
-		cam_x, cam_y = @true_pos.x, @true_pos.y
+		cam_x, cam_y = @camera\getPosition!
 
-		@true_pos.x = lerp(cam_x, mean_x, @smoothing)
-		@true_pos.y = lerp(cam_y, mean_y, @smoothing)
+		cam_x = lerp(cam_x, mean_x, @smoothing)
+		cam_y = lerp(cam_y, mean_y, @smoothing)
 
-		@camera\setPosition(round(@true_pos.x), round(@true_pos.y))
+		@camera\setPosition(cam_x, cam_y)
 
 	draw: =>
 		super!
