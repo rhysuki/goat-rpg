@@ -31,4 +31,4 @@ class Overworld extends Room
 		})
 
 		with @map.cartographer
-			@camera\setWorld(0, 0, .width * .tilewidth, .height * .tileheight)
+			@camera\setWorld(0, 0, @map\get_dimensions!)

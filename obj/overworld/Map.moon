@@ -79,7 +79,7 @@ class Map extends GameObject
 
 	--- returns the dimensions, in pixels, of @cartographer.
 	-- @treturn int, int
-	dimensions: =>
+	get_dimensions: =>
 		with @cartographer
 			return .width * .tilewidth, .height * .tileheight
 
