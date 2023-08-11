@@ -106,13 +106,18 @@ class Player extends Actor
 			if context.activate and @is_facing(context) and @input\pressed('interact')
 				context\activate!
 
+	-- TODO: use actor instead of obj
 	-- is this player facing the given object?
 	-- @treturn bool
 	is_facing: (obj) =>
-		if ((@pos.x >= obj.pos.x) and (@facing_direction == 'left')) or
-			((@pos.x < obj.pos.x) and (@facing_direction == 'right')) or
-			((@pos.y >= obj.pos.y) and (@facing_direction == 'up')) or
-			((@pos.y < obj.pos.y) and (@facing_direction == 'down'))
+		this = @hitbox.pos
+		other = obj.hitbox.pos
+		dir = @facing_direction
+
+		if (((this.x + this.w - 1) < other.x) and dir == 'right') or
+			((this.x > (other.x + other.w - 1)) and dir == 'left') or
+			(((this.y + this.h - 1) < other.y) and dir == 'down') or
+			((this.y > (other.y + other.h - 1)) and dir == 'up')
 			return true
 
 		return false
