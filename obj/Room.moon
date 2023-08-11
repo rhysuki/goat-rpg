@@ -23,6 +23,8 @@ class Room extends State
 
 		@members\add(DebugCommands(@), 1000)
 
+		@camera_controller.smoothing = 0.1
+
 	update: (dt) =>
 		@members\update(dt)
 		nil
