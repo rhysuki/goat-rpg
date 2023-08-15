@@ -7,9 +7,13 @@ class CircleTransition extends Transition
 	new: (room, args = {}) =>
 		super(room, args)
 
-		@r = distance(0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+		max_r = distance(0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
-		@timer\tween(@duration - 0.1, @, { r: 0 }, 'in-sine')
+		target_r = @is_reversed and max_r or 0
+		@r = @is_reversed and 0 or max_r
+		@tween = @is_reversed and 'out-sine' or 'in-sine'
+
+		@timer\tween(@duration - 0.1, @, { r: target_r }, @tween)
 
 	draw: =>
 		super!
