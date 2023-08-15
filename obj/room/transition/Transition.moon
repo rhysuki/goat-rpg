@@ -18,7 +18,7 @@ class Transition extends GameObject
 
 		super(room, args)
 
-		@next_room = assert(args.next_room)
+		@next_room = assert(args.next_room, "no room provided for this transition.")
 		@is_reversed = args.is_reversed
 		@duration = args.duration
 		@colour = args.colour
