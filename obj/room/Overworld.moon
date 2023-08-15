@@ -22,7 +22,7 @@ class Overworld extends Room
 			test: pubsub!
 		}
 
-		@map = @add(Map, @worlds.collision, map_name)
+		@map = @add(Map, { world: @worlds.collision, path: map_name })
 		@player = @add(Player, {
 			world: @worlds.collision,
 			interaction_world: @worlds.interaction

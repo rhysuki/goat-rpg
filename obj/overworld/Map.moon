@@ -7,6 +7,7 @@
 -- the map with some properties.
 
 import colour from require 'help.graphics'
+import safe_copy from require 'help.table'
 import to_file_path, asterisk_complete from require 'help.string'
 
 GameObject = require 'obj.GameObject'
@@ -15,14 +16,18 @@ cartographer = require 'lib.cartographer'
 assert = require 'lib.bat.assert'
 
 class Map extends GameObject
-	new: (room, world, path) =>
-		super(room)
+	new: (room, args = {}) =>
+		args = safe_copy({
+			world: nil
+			path: ''
+		}, args)
+		super(room, args)
 
-		@path = asterisk_complete(path, 'data/tiled/maps')
+		@path = asterisk_complete(args.path, 'data/tiled/maps')
 
 		assert(L.filesystem.getInfo(@path), "couldn't find map #{@path}.")
 
-		@world = world
+		@world = args.world
 		@cartographer = cartographer.load(@path)
 
 		@valid_layers = @get_valid_layers!
