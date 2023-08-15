@@ -53,7 +53,7 @@ class Room extends State
 		if out_transition then new_room\add_transition(out_transition)
 
 	--- quick add! doesn't work with objects that've been instantiated
-	-- already. use @members\add for that
+	-- already. use @members\add for that.
 	-- @treturn obj
-	add: (obj_class, ...) =>
-		return @members\add(obj_class(@, ...))
+	add: (obj_class, args = nil, draw_depth = nil) =>
+		return @members\add(obj_class(@, args), draw_depth)
