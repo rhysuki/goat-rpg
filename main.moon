@@ -22,6 +22,7 @@ love.load = ->
 		{
 			resizable: false
 			pixelperfect: true
+			-- pavizi
 			canvas: true
 		}
 	)
