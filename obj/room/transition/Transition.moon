@@ -13,6 +13,7 @@ class Transition extends GameObject
 
 			is_reversed: false
 			duration: 1
+			colour: 'black'
 		}, args)
 
 		super(room, args)
@@ -20,6 +21,7 @@ class Transition extends GameObject
 		@next_room = assert(args.next_room)
 		@is_reversed = args.is_reversed
 		@duration = args.duration
+		@colour = args.colour
 
 		@timer = timer!
 
