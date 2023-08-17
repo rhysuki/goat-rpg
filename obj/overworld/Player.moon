@@ -47,11 +47,11 @@ class Player extends Actor
 		super(dt)
 		@input\update(dt)
 
-		@update_facing_direction!
-		@move(dt)
+		@update_facing_direction(@get_move_axis!)
+		@move(dt, @get_move_axis!)
 
-		@animation_state = @is_moving! and 'walk' or 'idle'
-		@update_sprite!
+		@animation_state = @is_moving(@get_move_axis!) and 'walk' or 'idle'
+		@update_sprite(@get_move_axis!)
 
 		@check_interactibles!
 
@@ -59,9 +59,7 @@ class Player extends Actor
 
 	--
 
-	move: (dt) =>
-		x_move, y_move = @input\get('move')
-
+	move: (dt, x_move, y_move) =>
 		@pos.x += (x_move * @speed * dt * 60)
 		@pos.y += (y_move * @speed * dt * 60)
 
@@ -79,7 +77,7 @@ class Player extends Actor
 			@hitbox.pos.y + @hitbox.pos.h - @area_trigger.pos.h
 		)
 
-	update_facing_direction: =>
+	update_facing_direction: (x_move, y_move) =>
 		-- TODO: how's undertale do it? like, the first direction you
 		-- press is lower priority for diagonals.
 		-- eg hold left, then hold up makes frisk face up
@@ -88,8 +86,6 @@ class Player extends Actor
 		-- lone held direction = lower priority?
 		-- actually I just looked at it again and I think it's the other
 		-- way around
-		x_move, y_move = @input\get('move')
-
 		if x_move > 0 then @facing_direction = 'right'
 		elseif x_move < 0 then @facing_direction = 'left'
 		elseif y_move < 0 then @facing_direction = 'up'
