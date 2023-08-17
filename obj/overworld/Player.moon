@@ -47,11 +47,12 @@ class Player extends Actor
 		super(dt)
 		@input\update(dt)
 
-		@update_facing_direction(@get_move_axis!)
-		@move(dt, @get_move_axis!)
+		move_x, move_y = @get_move_axis!
 
-		@animation_state = @is_moving(@get_move_axis!) and 'walk' or 'idle'
-		@update_sprite(@get_move_axis!)
+		@update_facing_direction(move_x, move_y)
+		@move(dt, move_x, move_y)
+		@animation_state = @is_moving(move_x, move_y) and 'walk' or 'idle'
+		@update_sprite(move_x, move_y)
 
 		@check_interactibles!
 
