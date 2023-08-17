@@ -57,7 +57,7 @@ class Player extends Actor
 
 		@update_facing_direction(@move_x, @move_y)
 		@move(dt, @move_x, @move_y)
-		@animation_state = @get_animation_state(@move_x, @move_y)
+		@update_animation_state(@move_x, @move_y)
 		@update_sprite(@move_x, @move_y)
 
 		@check_interactibles!
@@ -85,6 +85,9 @@ class Player extends Actor
 			@hitbox.pos.x
 			@hitbox.pos.y + @hitbox.pos.h - @area_trigger.pos.h
 		)
+
+	update_animation_state: (x_move, y_move) =>
+		@animation_state = @is_moving(x_move, y_move) and 'walk' or 'idle'
 
 	update_facing_direction: (x_move, y_move) =>
 		-- TODO: how's undertale do it? like, the first direction you
@@ -124,10 +127,6 @@ class Player extends Actor
 			when 'up' then return 0, -1
 
 		error("#{direction} is not a valid direction?")
-
-	-- @treturn string
-	get_animation_state: (move_x, move_y) =>
-		return @is_moving(move_x, move_y) and 'walk' or 'idle'
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
