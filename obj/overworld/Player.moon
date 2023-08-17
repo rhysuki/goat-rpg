@@ -106,6 +106,16 @@ class Player extends Actor
 			if context.activate and @is_facing(context) and @input\pressed('interact')
 				context\activate!
 
+	-- @treturn number, number
+	get_move_axis: =>
+		return @input\get('move')
+
+	-- are any of the movement buttons pressed?
+	-- @treturn bool
+	is_moving: (x_move, y_move) =>
+		if x_move != 0 or y_move != 0 then return true
+		return false
+
 	-- TODO: use actor instead of obj
 	-- is this player facing the given object?
 	-- @treturn bool
@@ -120,12 +130,4 @@ class Player extends Actor
 			((this.y > (other.y + other.h - 1)) and dir == 'up')
 			return true
 
-		return false
-
-	-- are any of the movement buttons pressed?
-	-- @treturn bool
-	is_moving: =>
-		x_move, y_move = @input\get('move')
-
-		if x_move != 0 or y_move != 0 then return true
 		return false
