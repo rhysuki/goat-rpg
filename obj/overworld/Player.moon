@@ -107,6 +107,16 @@ class Player extends Actor
 	get_move_axis: =>
 		return @input\get('move')
 
+	-- @treturn number, number
+	get_direction_axis: (direction) =>
+		switch direction
+			when 'right' then return 1, 0
+			when 'left' then return -1, 0
+			when 'down' then return 0, 1
+			when 'up' then return 0, -1
+
+		error("#{direction} is not a valid direction?")
+
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
 	is_moving: (x_move, y_move) =>
