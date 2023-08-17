@@ -19,6 +19,8 @@ class Player extends Actor
 		super(room, args)
 
 		@is_input_enabled = true
+		-- the actual values used for movement logic. they don't reset
+		-- to 0 if is_input_enabled is off.
 		@move_x = 0
 		@move_y = 0
 		-- how many pixels to move per frame
@@ -51,7 +53,7 @@ class Player extends Actor
 		@input\update(dt)
 
 		if @is_input_enabled
-			@move_x, @move_y = @get_move_axis!
+			@set_move(@get_move_axis!)
 
 		@update_facing_direction(@move_x, @move_y)
 		@move(dt, @move_x, @move_y)
@@ -63,6 +65,8 @@ class Player extends Actor
 		@camera_target.x, @camera_target.y = @pos.x, @pos.y
 
 	--
+	set_move: (x, y) =>
+		@move_x, @move_y = x, y
 
 	move: (dt, x_move, y_move) =>
 		@pos.x += (x_move * @speed * dt * 60)
