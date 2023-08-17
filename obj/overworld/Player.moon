@@ -18,6 +18,9 @@ class Player extends Actor
 
 		super(room, args)
 
+		@is_input_enabled = true
+		@move_x = 0
+		@move_y = 0
 		-- how many pixels to move per frame
 		@speed = 1.2
 		@facing_direction = 'down'
@@ -47,12 +50,13 @@ class Player extends Actor
 		super(dt)
 		@input\update(dt)
 
-		move_x, move_y = @get_move_axis!
+		if @is_input_enabled
+			@move_x, @move_y = @get_move_axis!
 
-		@update_facing_direction(move_x, move_y)
-		@move(dt, move_x, move_y)
-		@animation_state = @get_animation_state(move_x, move_y)
-		@update_sprite(move_x, move_y)
+		@update_facing_direction(@move_x, @move_y)
+		@move(dt, @move_x, @move_y)
+		@animation_state = @get_animation_state(@move_x, @move_y)
+		@update_sprite(@move_x, @move_y)
 
 		@check_interactibles!
 
