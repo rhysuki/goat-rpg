@@ -1,9 +1,11 @@
 import is from require 'help.type'
 import safe_copy from require 'help.table'
 
+EmptyRoom = require 'obj.room.test.Empty'
 Player = require 'obj.overworld.Player'
 AreaTrigger = require 'obj.overworld.AreaTrigger'
 Overworld = require 'obj.room.Overworld'
+CircleTransition = require 'obj.room.transition.CircleTransition'
 
 class Exit extends AreaTrigger
 	tiled_object_to_args: (room, object) =>
@@ -26,4 +28,5 @@ class Exit extends AreaTrigger
 		if not other.context or not is(other.context, Player)
 			return
 
-		STAGE\goto(Overworld(@target_room_name))
+		next_room = Overworld(@target_room_name)
+		@room\add(CircleTransition, { :next_room }, 1000)
