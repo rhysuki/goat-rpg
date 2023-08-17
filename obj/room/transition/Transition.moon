@@ -34,4 +34,4 @@ class Transition extends GameObject
 	--
 
 	finish: =>
-		STAGE\goto(@next_room)
+		if @next_room then STAGE\goto(@next_room)
