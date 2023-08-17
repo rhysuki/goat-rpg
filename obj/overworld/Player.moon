@@ -55,10 +55,10 @@ class Player extends Actor
 		if @is_input_enabled
 			@set_move(@get_move_axis!)
 
-		@update_facing_direction(@move_x, @move_y)
-		@move(dt, @move_x, @move_y)
-		@update_animation_state(@move_x, @move_y)
-		@update_sprite(@move_x, @move_y)
+		@update_facing_direction!
+		@move(dt)
+		@update_animation_state!
+		@update_sprite!
 
 		@check_interactibles!
 
@@ -68,9 +68,9 @@ class Player extends Actor
 	set_move: (x, y) =>
 		@move_x, @move_y = x, y
 
-	move: (dt, x_move, y_move) =>
-		@pos.x += (x_move * @speed * dt * 60)
-		@pos.y += (y_move * @speed * dt * 60)
+	move: (dt) =>
+		@pos.x += (@move_x * @speed * dt * 60)
+		@pos.y += (@move_y * @speed * dt * 60)
 
 		@hitbox\move_to(@pos.x, @pos.y)
 
@@ -86,10 +86,10 @@ class Player extends Actor
 			@hitbox.pos.y + @hitbox.pos.h - @area_trigger.pos.h
 		)
 
-	update_animation_state: (x_move, y_move) =>
-		@animation_state = @is_moving(x_move, y_move) and 'walk' or 'idle'
+	update_animation_state: =>
+		@animation_state = @is_moving! and 'walk' or 'idle'
 
-	update_facing_direction: (x_move, y_move) =>
+	update_facing_direction: =>
 		-- TODO: how's undertale do it? like, the first direction you
 		-- press is lower priority for diagonals.
 		-- eg hold left, then hold up makes frisk face up
@@ -98,10 +98,10 @@ class Player extends Actor
 		-- lone held direction = lower priority?
 		-- actually I just looked at it again and I think it's the other
 		-- way around
-		if x_move > 0 then @facing_direction = 'right'
-		elseif x_move < 0 then @facing_direction = 'left'
-		elseif y_move < 0 then @facing_direction = 'up'
-		elseif y_move > 0 then @facing_direction = 'down'
+		if @move_x > 0 then @facing_direction = 'right'
+		elseif @move_x < 0 then @facing_direction = 'left'
+		elseif @move_y < 0 then @facing_direction = 'up'
+		elseif @move_y > 0 then @facing_direction = 'down'
 		else return
 
 	update_sprite: =>
@@ -130,8 +130,8 @@ class Player extends Actor
 
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
-	is_moving: (x_move, y_move) =>
-		if x_move != 0 or y_move != 0 then return true
+	is_moving: =>
+		if @move_x != 0 or @move_y != 0 then return true
 		return false
 
 	-- TODO: use actor instead of obj
