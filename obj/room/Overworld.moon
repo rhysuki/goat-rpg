@@ -8,7 +8,7 @@ colours = require 'data.colours'
 pubsub = require 'lib.bat.pubsub'
 
 class Overworld extends Room
-	new: (map_name) =>
+	new: (args = {}) =>
 		super!
 
 		@background_colour = colours.b_black
@@ -22,7 +22,7 @@ class Overworld extends Room
 			test: pubsub!
 		}
 
-		@map = @add(Map, { world: @worlds.collision, path: map_name })
+		@map = @add(Map, { world: @worlds.collision, path: args.map_name })
 		@player = @add(Player, {
 			world: @worlds.collision,
 			interaction_world: @worlds.interaction
