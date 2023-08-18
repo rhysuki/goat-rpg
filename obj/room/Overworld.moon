@@ -34,3 +34,9 @@ class Overworld extends Room
 			@camera\setWorld(0, 0, @map\get_dimensions!)
 
 		@camera_controller\snap_to_destination!
+	--
+
+	add_transition: (name, is_reversed = false) =>
+		transition = transitions[name]
+		if not transition then error("couldn't find transition #{name}.")
+		@members\add(transition(@, is_reversed), 1000)
