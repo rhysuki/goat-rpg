@@ -1,14 +1,22 @@
+import safe_copy from require 'help.table'
+
 Room = require 'obj.room.Room'
 Hitbox = require 'obj.overworld.Hitbox'
 Player = require 'obj.overworld.Player'
 Map = require 'obj.overworld.Map'
 
 bump = require 'lib.bump'
-colours = require 'data.colours'
 pubsub = require 'lib.bat.pubsub'
+colours = require 'data.colours'
+transitions = require 'data.transitions'
 
 class Overworld extends Room
 	new: (args = {}) =>
+		args = safe_copy({
+			map_name: ''
+			transition_name: ''
+		}, args)
+
 		super!
 
 		@background_colour = colours.b_black
@@ -34,6 +42,11 @@ class Overworld extends Room
 			@camera\setWorld(0, 0, @map\get_dimensions!)
 
 		@camera_controller\snap_to_destination!
+
+		-- a transition added from the args table in new will always be
+		-- reversed
+		if args.transition_name then @add_transition(args.transition_name, true)
+
 	--
 
 	add_transition: (name, is_reversed = false) =>
