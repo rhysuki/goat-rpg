@@ -14,7 +14,7 @@ class Overworld extends Room
 	new: (args = {}) =>
 		args = safe_copy({
 			map_name: ''
-			transition_name: ''
+			transition_name: nil
 		}, args)
 
 		super!
@@ -50,6 +50,6 @@ class Overworld extends Room
 	--
 
 	add_transition: (name, is_reversed = false) =>
-		transition = transitions[name]
-		if not transition then error("couldn't find transition #{name}.")
-		@members\add(transition(@, is_reversed), 1000)
+		transition_func = transitions[name]
+		if not transition_func then error("couldn't find transition #{name}.")
+		return @members\add(transition_func(@, is_reversed), 1000)
