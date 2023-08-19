@@ -28,6 +28,10 @@ class Exit extends AreaTrigger
 		if not other.context or not is(other.context, Player)
 			return
 
+		player = other.context
+		player.is_input_enabled = false
+		player\set_move(player\get_direction_axis('right'))
+
 		next_room = Overworld({
 			map_name: @target_room_name
 			transition_name: 'circle'
