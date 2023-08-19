@@ -1,6 +1,6 @@
 CircleTransition = require 'obj.room.transition.CircleTransition'
 
 {
-	circle_out: (room) =>
-		return CircleTransition(@, { is_reversed: true })
+	circle: (room, is_reversed = false) =>
+		return CircleTransition(@, { :is_reversed })
 }
