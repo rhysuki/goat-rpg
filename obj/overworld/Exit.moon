@@ -28,5 +28,10 @@ class Exit extends AreaTrigger
 		if not other.context or not is(other.context, Player)
 			return
 
-		next_room = Overworld(@target_room_name)
-		@room\add(CircleTransition, { :next_room }, 1000)
+		next_room = Overworld({
+			map_name: @target_room_name
+			transition_name: 'circle'
+		})
+
+		transition = @room\add_transition('circle')
+		transition.next_room = next_room
