@@ -8,7 +8,6 @@ Map = require 'obj.overworld.Map'
 bump = require 'lib.bump'
 pubsub = require 'lib.bat.pubsub'
 colours = require 'data.colours'
-transitions = require 'data.transitions'
 
 class Overworld extends Room
 	new: (args = {}) =>
@@ -46,10 +45,3 @@ class Overworld extends Room
 		-- a transition added from the args table in new will always be
 		-- reversed
 		if args.transition_name then @add_transition(args.transition_name, true)
-
-	--
-
-	add_transition: (name, is_reversed = false) =>
-		transition_func = transitions[name]
-		if not transition_func then error("couldn't find transition #{name}.")
-		return @members\add(transition_func(@, is_reversed), 1000)

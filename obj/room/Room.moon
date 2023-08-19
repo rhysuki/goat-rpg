@@ -6,6 +6,7 @@ CameraController = require 'obj.CameraController'
 DebugCommands = require 'obj.DebugCommands'
 
 gamera = require 'lib.gamera'
+transitions = require 'data.transitions'
 
 class Room extends State
 	new: (args = {}) =>
@@ -57,3 +58,8 @@ class Room extends State
 	-- @treturn obj
 	add: (obj_class, args = nil, draw_depth = nil) =>
 		return @members\add(obj_class(@, args), draw_depth)
+
+	add_transition: (name, is_reversed = false) =>
+		transition_func = transitions[name]
+		if not transition_func then error("couldn't find transition #{name}.")
+		return @members\add(transition_func(@, is_reversed), 1000)
