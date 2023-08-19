@@ -128,6 +128,16 @@ class Player extends Actor
 
 		error("#{direction} is not a valid direction?")
 
+	-- @treturn string
+	get_opposite_direction: (direction) =>
+		switch direction
+			when 'right' then return 'left'
+			when 'left' then return 'right'
+			when 'down' then return 'up'
+			when 'up' then return 'down'
+
+		error("#{direction} is not a valid direction?")
+
 	-- are any of the movement buttons pressed?
 	-- @treturn bool
 	is_moving: =>
