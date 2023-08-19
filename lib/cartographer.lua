@@ -752,7 +752,7 @@ function Map:_loadImages()
 		if tileset.image then self:_loadImage(tileset.image) end
 
 		if tileset.tiles == nil then
-			error('tileset image missing in this map. remember to click the little "embed tileset" button.')
+			error('tileset image missing in this map. remember to click the little "embed tileset" button. \ntip: close any .tsx files on tiled and click the "remove tileset" trashbin button at the bottom of the tilesets window.')
 		end
 
 		for _, tile in ipairs(tileset.tiles) do
