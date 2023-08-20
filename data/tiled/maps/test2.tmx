@@ -107,7 +107,7 @@
   </object>
   <object id="1027" type="obj.overworld.Exit" x="80" y="272" width="16" height="16">
    <properties>
-    <property name="direction" value="right"/>
+    <property name="direction" value="left"/>
     <property name="exit_id" type="int" value="2"/>
     <property name="target_exit_id" type="int" value="2"/>
     <property name="target_room_name" value="*/test.lua"/>

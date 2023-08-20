@@ -400,7 +400,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = "right",
+            ["direction"] = "left",
             ["exit_id"] = 2,
             ["target_exit_id"] = 2,
             ["target_room_name"] = "*/test.lua",
