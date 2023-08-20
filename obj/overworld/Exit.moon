@@ -42,19 +42,9 @@ class Exit extends AreaTrigger
 
 	--
 
-	on_exit: (other) =>
-		if not other.context or not is(other.context, Player)
-			return
-
-		-- if the player's coming out of this exit, reenable it and
-		-- the player's input.
-		if not @is_exit_enabled
-			@is_exit_enabled = true
-
-			player = other.context
-			player.is_input_enabled = true
-
 	on_enter: (other) =>
+		super(other)
+
 		if not other.context or not is(other.context, Player) or not @is_exit_enabled
 			return
 
@@ -71,12 +61,44 @@ class Exit extends AreaTrigger
 		transition = @room\add_transition('circle')
 		transition.next_room = next_room
 
+	on_exit: (other) =>
+		super(other)
+
+		if not other.context or not is(other.context, Player)
+			return
+
+		-- if the player's coming out of this exit, reenable it and
+		-- the player's input.
+		-- something interesting: since this is on_exit and not on_enter,
+		-- the player can teeeechnically start outside this exit, walk
+		-- until they enter, then keep walking until they exit again (and
+		-- THEN this code triggers).
+		if not @is_exit_enabled
+			@is_exit_enabled = true
+
+			player = other.context
+			player.is_input_enabled = true
+
 	move_player_to_this: (player) =>
 		-- player walks in the direction opposite to @direction.
 		x, y = player\get_direction_axis(player\get_opposite_direction(@direction))
 
 		player.is_input_enabled = false
 		player\set_move(x, y)
-		player\set_position(@pos.x, @pos.y)
+		player\set_position(@get_player_exit_pos!)
 
 		@is_exit_enabled = false
+
+	-- get the pos corresponding with the edge the player will cross when
+	-- they're exiting.
+	-- @treturn number, number
+	get_player_exit_pos: (dir = @direction) =>
+		offset = 50
+		center_x = @pos.x + (@pos.w / 2) - 6
+		center_y = @pos.y + (@pos.h / 2)
+
+		switch dir
+			when 'right' then return @pos.x + offset, center_y
+			when 'left' then return @pos.x + @pos.w - offset, center_y
+			when 'down' then return center_x, @pos.y + offset
+			when 'up' then return center_x, @pos.y + @pos.h - offset
