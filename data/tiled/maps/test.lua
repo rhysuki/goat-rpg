@@ -526,14 +526,16 @@ return {
           name = "",
           type = "obj.overworld.Exit",
           shape = "rectangle",
-          x = 256,
-          y = 64,
+          x = 144,
+          y = 32,
           width = 16,
           height = 32,
           rotation = 0,
           visible = true,
           properties = {
             ["direction"] = "right",
+            ["exit_id"] = 1,
+            ["target_exit_id"] = 1,
             ["target_room_name"] = "*/test2.lua",
             ["transition_name"] = "circle"
           }
