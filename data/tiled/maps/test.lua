@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 11,
-  nextobjectid = 80,
+  nextobjectid = 81,
   properties = {},
   tilesets = {
     {
@@ -529,13 +529,32 @@ return {
           x = 144,
           y = 32,
           width = 16,
-          height = 32,
+          height = 16,
           rotation = 0,
           visible = true,
           properties = {
             ["direction"] = "right",
             ["exit_id"] = 1,
             ["target_exit_id"] = 1,
+            ["target_room_name"] = "*/test2.lua",
+            ["transition_name"] = "circle"
+          }
+        },
+        {
+          id = 80,
+          name = "",
+          type = "obj.overworld.Exit",
+          shape = "rectangle",
+          x = 144,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["direction"] = "right",
+            ["exit_id"] = 2,
+            ["target_exit_id"] = 2,
             ["target_room_name"] = "*/test2.lua",
             ["transition_name"] = "circle"
           }

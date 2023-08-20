@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="1026">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="1028">
  <editorsettings>
   <export target="test2.lua" format="lua"/>
  </editorsettings>
@@ -95,6 +95,24 @@
     <property name="actor_name" value="big_tree"/>
    </properties>
    <point/>
+  </object>
+  <object id="1026" type="obj.overworld.Exit" x="32" y="48" width="16" height="16">
+   <properties>
+    <property name="direction" value="right"/>
+    <property name="exit_id" type="int" value="1"/>
+    <property name="target_exit_id" type="int" value="1"/>
+    <property name="target_room_name" value="*/test.lua"/>
+    <property name="transition_name" value="circle"/>
+   </properties>
+  </object>
+  <object id="1027" type="obj.overworld.Exit" x="80" y="272" width="16" height="16">
+   <properties>
+    <property name="direction" value="right"/>
+    <property name="exit_id" type="int" value="2"/>
+    <property name="target_exit_id" type="int" value="2"/>
+    <property name="target_room_name" value="*/test.lua"/>
+    <property name="transition_name" value="circle"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 8,
-  nextobjectid = 1026,
+  nextobjectid = 1028,
   properties = {},
   tilesets = {
     {
@@ -367,6 +367,44 @@ return {
           visible = true,
           properties = {
             ["actor_name"] = "big_tree"
+          }
+        },
+        {
+          id = 1026,
+          name = "",
+          type = "obj.overworld.Exit",
+          shape = "rectangle",
+          x = 32,
+          y = 48,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["direction"] = "right",
+            ["exit_id"] = 1,
+            ["target_exit_id"] = 1,
+            ["target_room_name"] = "*/test.lua",
+            ["transition_name"] = "circle"
+          }
+        },
+        {
+          id = 1027,
+          name = "",
+          type = "obj.overworld.Exit",
+          shape = "rectangle",
+          x = 80,
+          y = 272,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["direction"] = "right",
+            ["exit_id"] = 2,
+            ["target_exit_id"] = 2,
+            ["target_room_name"] = "*/test.lua",
+            ["transition_name"] = "circle"
           }
         }
       }
