@@ -50,6 +50,7 @@ class Exit extends AreaTrigger
 		next_room = Overworld({
 			map_name: @target_room_name
 			transition_name: @transition_name
+			target_exit_id: @target_exit_id
 		})
 
 		transition = @room\add_transition('circle')
