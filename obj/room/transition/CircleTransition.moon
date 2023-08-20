@@ -1,11 +1,18 @@
 import colour from require 'help.graphics'
 import distance from require 'lib.bat.mathx'
+import safe_copy from require 'help.table'
 
 Transition = require 'obj.room.transition.Transition'
 
 class CircleTransition extends Transition
 	new: (room, args = {}) =>
+		args = safe_copy({
+			-- a table with x and y fields. can be a pos?
+			target: room.camera
+		}, args)
 		super(room, args)
+
+		@target = args.target
 
 		max_r = distance(0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
@@ -18,7 +25,7 @@ class CircleTransition extends Transition
 	draw: =>
 		super!
 
-		with @room.camera
+		with @target
 			LG.stencil(-> LG.circle('fill', .x, .y, @r))
 			LG.setStencilTest('less', 1)
 
