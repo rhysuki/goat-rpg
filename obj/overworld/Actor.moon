@@ -70,6 +70,14 @@ class Actor extends GameObject
 		@hitbox\die!
 		@area_trigger\die!
 
+	-- snaps position to x, y without checking collisions.
+	set_position: (x, y) =>
+		@pos.x, @pos.y = x, y
+
+		@hitbox\set_position(@pos.x, @pos.y)
+		@move_area_trigger!
+		@move_sprite!
+
 	move_hitbox: =>
 		@hitbox\move_to(@pos.x, @pos.y)
 
