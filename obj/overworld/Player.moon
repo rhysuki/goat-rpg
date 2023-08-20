@@ -65,6 +65,11 @@ class Player extends Actor
 		@camera_target.x, @camera_target.y = @pos.x, @pos.y
 
 	--
+
+	set_position: (x, y) =>
+		super(x, y)
+		@camera_target.x, @camera_target.y = @pos.x, @pos.y
+
 	set_move: (x, y) =>
 		@move_x, @move_y = x, y
 
