@@ -45,3 +45,12 @@ class Overworld extends Room
 		-- a transition added from the args table in new will always be
 		-- reversed
 		if args.transition_name then @add_transition(args.transition_name, true)
+	--
+
+	-- returns the exit with this id, nil if not found.
+	-- doesn't aaaacccctually search for only instances of the class Exit,
+	-- but... who gaf
+	-- @treturn obj | nil
+	find_exit_with_id: (id) =>
+		for obj in *@members.list
+			if obj.exit_id == id then return obj
