@@ -54,3 +54,7 @@ class Exit extends AreaTrigger
 
 		transition = @room\add_transition('circle')
 		transition.next_room = next_room
+
+	move_player_to_this: (player) =>
+		-- x, y = player\get_direction_axis(player\get_opposite_direction(@direction))
+		player\set_position(@pos.x - 16, @pos.y)
