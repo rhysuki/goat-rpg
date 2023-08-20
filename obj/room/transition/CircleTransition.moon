@@ -22,9 +22,8 @@ class CircleTransition extends Transition
 
 		target_r = @is_reversed and max_r or 0
 		@r = @is_reversed and 0 or max_r
-		@tween = @is_reversed and 'out-sine' or 'in-sine'
 
-		@timer\tween(@duration - 0.1, @, { r: target_r }, @tween)
+		@timer\tween(@duration - 0.1, @, { r: target_r }, 'in-out-cubic')
 
 	draw: =>
 		super!
