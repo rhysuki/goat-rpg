@@ -16,7 +16,9 @@ class CircleTransition extends Transition
 		@target = args.target
 		@target_offset = args.target_offset
 
-		max_r = distance(0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+		-- assuming the target is on screen, the radius'll never have to
+		-- be bigger than this
+		max_r = distance(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 		target_r = @is_reversed and max_r or 0
 		@r = @is_reversed and 0 or max_r
