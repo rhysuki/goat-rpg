@@ -28,13 +28,10 @@ class CircleTransition extends Transition
 	draw: =>
 		super!
 
-
 		-- limit x and y to within the camera view
 		cam = @room.camera
 		x = clamp(@target.x + @target_offset.x, cam.x - cam.w2, cam.x + cam.w2)
 		y = clamp(@target.y + @target_offset.y, cam.y - cam.h2, cam.y + cam.h2)
-
-
 
 		LG.stencil(-> LG.circle('fill', x, y, @r))
 		LG.setStencilTest('less', 1)
