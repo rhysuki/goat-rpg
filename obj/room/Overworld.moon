@@ -14,6 +14,7 @@ class Overworld extends Room
 		args = safe_copy({
 			map_name: ''
 			transition_name: nil
+			target_exit_id: nil
 		}, args)
 
 		super!
