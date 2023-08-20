@@ -41,11 +41,16 @@ class Overworld extends Room
 		with @map.cartographer
 			@camera\setWorld(0, 0, @map\get_dimensions!)
 
-		@camera_controller\snap_to_destination!
-
 		-- a transition added from the args table in new will always be
 		-- reversed
 		if args.transition_name then @add_transition(args.transition_name, true)
+		if args.target_exit_id
+			exit = @find_exit_with_id(args.target_exit_id)
+			if not exit then error("couldn't find exit with id #{args.target_exit_id}.")
+			exit\move_player_to_this(@player)
+
+		@camera_controller\snap_to_destination!
+
 	--
 
 	-- returns the exit with this id, nil if not found.
