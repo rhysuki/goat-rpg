@@ -13,6 +13,7 @@ class Source extends GameObject
 		args = safe_copy({
 			sound_name: nil
 			radius: 50
+			volume: 1
 			-- a table with x and y, like a GameObject's @pos.
 			listener: nil
 		}, args)
@@ -21,9 +22,14 @@ class Source extends GameObject
 
 		@sound = sounds[args.sound_name]
 		@radius = args.radius
+		@volume = args.volume
 		@listener = args.listener
 
 		@instance = @sound\play!
+		@instance.volume = @get_volume!
+
+	update: (dt) =>
+		@instance.volume = @get_volume!
 
 	draw: =>
 		if DEBUG_FLAGS.show_positions
@@ -40,4 +46,4 @@ class Source extends GameObject
 	get_volume: =>
 		dist = distance(@pos.x, @pos.y, @listener.x, @listener.y)
 		volume = clamp((1 - (dist / @radius)), 0, 1)
-		return smoothstep(volume)
+		return smoothstep(volume) * @volume
