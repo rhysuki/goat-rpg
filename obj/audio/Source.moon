@@ -1,7 +1,8 @@
--- an audio source with distance.
--- can be listened to by a listener?
+-- an audio source that exists in 2d space. volume depends on distance
+-- between it and @listener.
 import safe_copy from require 'help.table'
 import colour from require 'help.graphics'
+import clamp, distance, smoothstep from require 'lib.bat.mathx'
 
 GameObject = require 'obj.GameObject'
 
@@ -12,15 +13,17 @@ class Source extends GameObject
 		args = safe_copy({
 			sound_name: nil
 			radius: 50
+			-- a table with x and y, like a GameObject's @pos.
+			listener: nil
 		}, args)
 
 		super(room, args)
 
 		@sound = sounds[args.sound_name]
 		@radius = args.radius
-		@instance = @sound\play!
+		@listener = args.listener
 
-		@listeners = {}
+		@instance = @sound\play!
 
 	draw: =>
 		if DEBUG_FLAGS.show_positions
@@ -32,7 +35,9 @@ class Source extends GameObject
 
 	--
 
-	-- add a listener to listen for this audio. must have x and y fields,
-	-- like a GameObject's @pos.
-	add_listener: (obj) =>
-		INSERT(@listeners, obj)
+	-- calculates the volume based on the distance to the listener.
+	-- @treturn number
+	get_volume: =>
+		dist = distance(@pos.x, @pos.y, @listener.x, @listener.y)
+		volume = clamp((1 - (dist / @radius)), 0, 1)
+		return smoothstep(volume)
