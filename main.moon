@@ -13,6 +13,7 @@ love.load = ->
 	love.graphics.setLineStyle('rough')
 
 	require 'init_globals'
+	require 'init_specs'
 
 	push\setupScreen(
 		SCREEN_WIDTH
