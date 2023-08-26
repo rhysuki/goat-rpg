@@ -31,4 +31,15 @@
 			pos: { w: 65, h: 16 }
 		}
 	}
+
+	radio: {
+		sprite: {
+			path: '*/radio'
+			initial_tag: 'main'
+		}
+
+		hitbox: {
+			pos: { w: 10, h: 6 }
+		}
+	}
 }
