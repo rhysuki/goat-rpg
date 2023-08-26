@@ -1,4 +1,9 @@
 {
+	--- copies all the keys from source to target. modifies target.
+	unpack_keys_to: (source, target, keys) ->
+		for key in *keys
+			target[key] = source[key]
+
 	--- checks if a table's completely empty.
 	-- @treturn bool
 	is_empty: (t) ->
