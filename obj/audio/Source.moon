@@ -15,7 +15,7 @@ class Source extends GameObject
 		out.sound_name = object.properties.sound_name
 		out.volume = object.properties.volume
 		out.listener = room.player.pos
-		-- ASSUMES THIS IS AN ELLIPSE TILED OBJECTK
+		-- ASSUMES THIS IS AN ELLIPSE TILED OBJECT
 		out.pos.x = object.x + (object.width / 2)
 		out.pos.y = object.y + (object.height / 2)
 		out.radius = object.width / 2
