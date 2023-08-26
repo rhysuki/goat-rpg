@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 8,
-  nextobjectid = 1028,
+  nextobjectid = 1031,
   properties = {},
   tilesets = {
     {
@@ -405,6 +405,37 @@ return {
             ["target_exit_id"] = 2,
             ["target_room_name"] = "*/test.lua",
             ["transition_name"] = "circle"
+          }
+        },
+        {
+          id = 1029,
+          name = "song",
+          type = "obj.audio.Source",
+          shape = "ellipse",
+          x = 32,
+          y = 80,
+          width = 160,
+          height = 160,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["sound_name"] = "test",
+            ["volume"] = 0.5
+          }
+        },
+        {
+          id = 1030,
+          name = "radio",
+          type = "obj.overworld.Actor",
+          shape = "point",
+          x = 106.5,
+          y = 156.5,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor_name"] = "radio"
           }
         }
       }
