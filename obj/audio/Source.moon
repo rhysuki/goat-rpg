@@ -9,6 +9,19 @@ GameObject = require 'obj.GameObject'
 sounds = require 'data.sounds'
 
 class Source extends GameObject
+	tiled_object_to_args: (room, object) =>
+		out = super(room, object)
+
+		out.sound_name = object.properties.sound_name
+		out.volume = object.properties.volume
+		out.listener = room.player.pos
+		-- ASSUMES THIS IS AN ELLIPSE TILED OBJECTK
+		out.pos.x = object.x + (object.width / 2)
+		out.pos.y = object.y + (object.height / 2)
+		out.radius = object.width / 2
+
+		return out
+
 	new: (room, args = {}) =>
 		args = safe_copy({
 			sound_name: nil
