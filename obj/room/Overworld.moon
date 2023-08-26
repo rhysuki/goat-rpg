@@ -30,13 +30,13 @@ class Overworld extends Room
 			test: pubsub!
 		}
 
-		@map = @add(Map, { world: @worlds.collision, path: args.map_name })
 		@player = @add(Player, {
 			world: @worlds.collision,
 			interaction_world: @worlds.interaction
 
 			pos: { x: 108, y: 48 }
 		})
+		@map = @add(Map, { world: @worlds.collision, path: args.map_name }, -1)
 
 		with @map.cartographer
 			@camera\setWorld(0, 0, @map\get_dimensions!)
