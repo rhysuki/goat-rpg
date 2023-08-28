@@ -50,7 +50,6 @@ export STAGE = StateMachine!
 export IMAGE = ImageCache!
 
 -- TODO: maybe move this to its own func?
--- TODO: add debug_related inputs
 export INPUT = baton.new({
 	controls: {
 		move_left: { 'key:left', 'axis:leftx-' }
@@ -59,6 +58,11 @@ export INPUT = baton.new({
 		move_down: { 'key:down', 'axis:lefty+' }
 
 		interact: { 'key:z' }
+
+		debug_modifier: { 'key:f' }
+		debug_switch_hitboxes: { 'key:q' }
+		debug_switch_positions: { 'key:w' }
+		debug_switch_frame_info: { 'key:e' }
 	}
 
 	pairs: {

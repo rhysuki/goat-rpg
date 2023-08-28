@@ -38,6 +38,7 @@ love.update = (dt) ->
 	prof.push('frame')
 	if DEBUG_FLAGS.limit_dt then dt = math.min(dt, 0.2)
 
+	INPUT\update(dt)
 	STAGE\update(dt)
 	nil
 
