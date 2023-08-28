@@ -28,6 +28,9 @@ love.load = ->
 		}
 	)
 
+	import tiny from require 'data.fonts'
+	tiny\setLineHeight(0.7)
+
 	print("=======================================================")
 
 	LG.setFont(require('data.fonts').tiny)
