@@ -18,12 +18,18 @@ class TextBox extends CutsceneObject
 			-- table of strings
 			texts: nil
 			corner_roundness: 6
+
+			foreground_colour: 'b_pink'
+			background_colour: 'b_white'
 		}, args)
 
 		super(room, args)
 
 		@texts = args.texts
 		@corner_roundness = args.corner_roundness
+		@foreground_colour = args.foreground_colour
+		@background_colour = args.background_colour
+
 		@input = @room.input
 		@timer = timer!
 
@@ -43,15 +49,15 @@ class TextBox extends CutsceneObject
 	draw: =>
 		super!
 
-		colour('b_white')
+		colour(@background_colour)
 		LG.rectangle('fill', @get_rect!)
 
-		colour('b_pink')
+		colour(@foreground_colour)
 		LG.setLineWidth(2)
 		LG.rectangle('line', @get_rect!)
 		LG.setLineWidth(1)
 
-		colour('b_pink', @text_alpha)
+		colour(@foreground_colour, @text_alpha)
 		LG.printf(@text, @pos.x + 5, @pos.y, @pos.w - 10, 'left')
 		colour!
 
