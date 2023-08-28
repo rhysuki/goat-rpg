@@ -15,22 +15,29 @@ class TextBox extends CutsceneObject
 				h: 60
 			}
 
-			text: ''
+			-- table of strings
+			texts: nil
 			corner_roundness: 6
 		}, args)
 
 		super(room, args)
 
-		@text = args.text
+		@texts = args.texts
 		@corner_roundness = args.corner_roundness
 		@input = @room.input
 		@timer = timer!
+
+		@text = ''
+
+		@go_to_next_text!
 
 	update: (dt) =>
 		super(dt)
 		@timer\update(dt)
 
-		if @input\pressed('interact') then @finish!
+		if @input\pressed('interact')
+			@go_to_next_text!
+			if not @text then @finish!
 
 	draw: =>
 		super!
@@ -49,3 +56,6 @@ class TextBox extends CutsceneObject
 	finish: =>
 		super!
 		@die!
+
+	go_to_next_text: =>
+		@text = table.remove(@texts, 1)
