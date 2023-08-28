@@ -39,7 +39,6 @@ class Circle extends GameObject
 
 	update: (dt) =>
 		super(dt)
-		@input\update(dt)
 		@draw_depth = (@pos.y + @depth_height) / 1000
 
 		if not @is_player then return

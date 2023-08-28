@@ -15,6 +15,7 @@ class Room extends State
 		super(STAGE)
 		@background_colour = { 0, 0, 0 }
 
+		@input = INPUT
 		@members = LayeredManager!
 
 		@camera = gamera.new(-math.huge, -math.huge, math.huge, math.huge)

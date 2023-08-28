@@ -6,6 +6,8 @@ class DebugCommands extends GameObject
 	new: (room, args = {}) =>
 		super(room, args)
 
+		@input = @room.input
+
 		@key = {
 			debug_switch_hitboxes: 'show_hitboxes'
 			debug_switch_positions: 'show_positions'
@@ -17,12 +19,12 @@ class DebugCommands extends GameObject
 	update: (dt) =>
 		super(dt)
 
-		if INPUT\pressed('debug_modifier')
+		if @input\pressed('debug_modifier')
 			@is_modifier_enabled = not @is_modifier_enabled
 
 		if @is_modifier_enabled
 			for input, flag in pairs @key
-				if INPUT\pressed(input)
+				if @input\pressed(input)
 					DEBUG_FLAGS[flag] = not DEBUG_FLAGS[flag]
 					@is_modifier_enabled = false
 

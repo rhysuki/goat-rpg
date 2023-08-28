@@ -27,7 +27,7 @@ class Player extends Actor
 		@animation_state = 'idle'
 		@debug_colour = 'b_pink'
 
-		@input = INPUT
+		@input = @room.input
 
 		@camera_target = @room.camera_controller\add_target(@pos.x, @pos.y)
 
@@ -35,7 +35,6 @@ class Player extends Actor
 
 	update: (dt) =>
 		super(dt)
-		@input\update(dt)
 
 		if @is_input_enabled
 			@set_move(@get_move_axis!)
