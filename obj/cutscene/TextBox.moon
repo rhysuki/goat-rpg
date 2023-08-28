@@ -28,6 +28,7 @@ class TextBox extends CutsceneObject
 		@timer = timer!
 
 		@text = ''
+		@text_alpha = 0
 
 		@go_to_next_text!
 
@@ -48,6 +49,8 @@ class TextBox extends CutsceneObject
 		LG.setLineWidth(2)
 		LG.rectangle('line', @pos.x, @pos.y, @pos.w, @pos.h, @corner_roundness, @corner_roundness)
 		LG.setLineWidth(1)
+
+		colour('b_pink', @text_alpha)
 		LG.print(@text, @pos.x + 5, @pos.y)
 		colour!
 
@@ -59,3 +62,6 @@ class TextBox extends CutsceneObject
 
 	go_to_next_text: =>
 		@text = table.remove(@texts, 1)
+
+		@text_alpha = 0
+		@timer\tween('text_alpha', 0.5, @, { text_alpha: 1 }, 'out-cubic')
