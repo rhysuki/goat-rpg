@@ -44,6 +44,25 @@ export INSPECT = require 'lib.inspect'
 
 StateMachine = require 'obj.state_machine.StateMachine'
 ImageCache = require 'obj.ImageCache'
+baton = require 'lib.baton'
 
 export STAGE = StateMachine!
 export IMAGE = ImageCache!
+
+-- TODO: maybe move this to its own func?
+-- TODO: add debug_related inputs
+-- TODO: rename these to move_left etc
+export INPUT = baton.new({
+	controls: {
+		left: { 'key:left', 'axis:leftx-' }
+		right: { 'key:right', 'axis:leftx+' }
+		up: { 'key:up', 'axis:lefty-' }
+		down: { 'key:down', 'axis:lefty+' }
+
+		interact: { 'key:z' }
+	}
+
+	pairs: {
+		move: { 'left', 'right', 'up', 'down' }
+	}
+})

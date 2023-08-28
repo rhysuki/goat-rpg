@@ -7,8 +7,6 @@ AreaTrigger = require 'obj.overworld.AreaTrigger'
 Peachy = require 'obj.Peachy'
 Interactible = require 'obj.overworld.Interactible'
 
-baton = require 'lib.baton'
-
 class Player extends Actor
 	new: (room, args = {}) =>
 		args = safe_copy({
@@ -29,20 +27,7 @@ class Player extends Actor
 		@animation_state = 'idle'
 		@debug_colour = 'b_pink'
 
-		@input = baton.new({
-			controls: {
-				left: { 'key:left', 'axis:leftx-' }
-				right: { 'key:right', 'axis:leftx+' }
-				up: { 'key:up', 'axis:lefty-' }
-				down: { 'key:down', 'axis:lefty+' }
-
-				interact: { 'key:z' }
-			}
-
-			pairs: {
-				move: { 'left', 'right', 'up', 'down' }
-			}
-		})
+		@input = INPUT
 
 		@camera_target = @room.camera_controller\add_target(@pos.x, @pos.y)
 
