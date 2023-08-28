@@ -51,18 +51,17 @@ export IMAGE = ImageCache!
 
 -- TODO: maybe move this to its own func?
 -- TODO: add debug_related inputs
--- TODO: rename these to move_left etc
 export INPUT = baton.new({
 	controls: {
-		left: { 'key:left', 'axis:leftx-' }
-		right: { 'key:right', 'axis:leftx+' }
-		up: { 'key:up', 'axis:lefty-' }
-		down: { 'key:down', 'axis:lefty+' }
+		move_left: { 'key:left', 'axis:leftx-' }
+		move_right: { 'key:right', 'axis:leftx+' }
+		move_up: { 'key:up', 'axis:lefty-' }
+		move_down: { 'key:down', 'axis:lefty+' }
 
 		interact: { 'key:z' }
 	}
 
 	pairs: {
-		move: { 'left', 'right', 'up', 'down' }
+		move: { 'move_left', 'move_right', 'move_up', 'move_down' }
 	}
 })
