@@ -44,10 +44,11 @@ class TextBox extends CutsceneObject
 		super!
 
 		colour('b_white')
-		LG.rectangle('fill', @pos.x, @pos.y, @pos.w, @pos.h, @corner_roundness, @corner_roundness)
+		LG.rectangle('fill', @get_rect!)
+
 		colour('b_pink')
 		LG.setLineWidth(2)
-		LG.rectangle('line', @pos.x, @pos.y, @pos.w, @pos.h, @corner_roundness, @corner_roundness)
+		LG.rectangle('line', @get_rect!)
 		LG.setLineWidth(1)
 
 		colour('b_pink', @text_alpha)
@@ -65,3 +66,7 @@ class TextBox extends CutsceneObject
 
 		@text_alpha = 0
 		@timer\tween('text_alpha', 0.5, @, { text_alpha: 1 }, 'out-cubic')
+
+	-- @treturn number, number, number, number, number, number
+	get_rect: =>
+		return @pos.x, @pos.y, @pos.w, @pos.h, @corner_roundness, @corner_roundness
