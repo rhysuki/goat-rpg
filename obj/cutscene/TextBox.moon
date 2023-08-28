@@ -51,7 +51,7 @@ class TextBox extends CutsceneObject
 		LG.setLineWidth(1)
 
 		colour('b_pink', @text_alpha)
-		LG.print(@text, @pos.x + 5, @pos.y)
+		LG.printf(@text, @pos.x + 5, @pos.y, @pos.w - 10, 'left')
 		colour!
 
 	--
