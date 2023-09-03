@@ -13,19 +13,18 @@ class Room extends State
 		-- always passes STAGE as its owner stateMachine, and has no
 		-- context.
 		super(STAGE)
+
 		@background_colour = { 0, 0, 0 }
 
 		@input = INPUT
 		@members = LayeredManager!
 
-		@camera = gamera.new(-math.huge, -math.huge, math.huge, math.huge)
-		@camera_controller = @add(CameraController, @camera)
-
-		@camera\setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+		@camera = with gamera.new(-math.huge, -math.huge, math.huge, math.huge)
+			\setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+		@camera_controller = with @add(CameraController, @camera)
+			.smoothing = 0.1
 
 		@members\add(DebugCommands(@), 1000)
-
-		@camera_controller.smoothing = 0.1
 
 	update: (dt) =>
 		@members\update(dt)

@@ -46,7 +46,7 @@ class Player extends Actor
 
 		@check_interactibles!
 
-		@camera_target.x, @camera_target.y = @pos.x, @pos.y
+		@camera_target.x, @camera_target.y = @pos.x + 6, @pos.y
 
 	--
 
