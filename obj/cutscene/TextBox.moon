@@ -52,21 +52,27 @@ class TextBox extends CutsceneObject
 	draw: =>
 		super!
 
+		cam_x = @room.camera.x - @room.camera.w2
+		cam_y = @room.camera.y - @room.camera.h2
+		x, y, w, h, r, r = @get_rect!
+		x += cam_x
+		y += cam_y
+
 		colour(@background_colour)
-		LG.rectangle('fill', @get_rect!)
+		LG.rectangle('fill', x, y, w, h, r, r)
 
 		colour(@foreground_colour)
 		LG.setLineWidth(4)
-		LG.rectangle('line', @get_rect!)
+		LG.rectangle('line', x, y, w, h, r, r)
 		LG.setLineWidth(1)
 
 		do
-			triangle_x = @pos.x + @pos.w - 12
-			triangle_y = @pos.y + @pos.h - 10 + (@is_triangle_down and 1 or 0)
+			triangle_x = x + @pos.w - 12
+			triangle_y = y + @pos.h - 10 + (@is_triangle_down and 1 or 0)
 			@draw_triangle(triangle_x, triangle_y)
 
 		colour(@foreground_colour, @text_alpha)
-		LG.printf(@text, @pos.x + 5, @pos.y, @pos.w - 10, 'left')
+		LG.printf(@text, x + 5, y, @pos.w - 10, 'left')
 		colour!
 
 	--
