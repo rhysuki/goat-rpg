@@ -32,11 +32,13 @@ class TextBox extends CutsceneObject
 		@background_colour = args.background_colour
 		@is_triangle_down = false
 
-		@input = @room.input
-		@timer = timer!
+		@text_number = 0
 
 		@text = ''
 		@text_alpha = 0
+
+		@input = @room.input
+		@timer = timer!
 
 		if args.is_bottom then @pos.y = SCREEN_HEIGHT - @pos.h - 10
 
@@ -85,7 +87,8 @@ class TextBox extends CutsceneObject
 		@die!
 
 	go_to_next_text: =>
-		@text = table.remove(@texts, 1)
+		@text_number += 1
+		@text = @texts[@text_number]
 
 		@text_alpha = 0
 		@timer\tween('text_alpha', 0.5, @, { text_alpha: 1 }, 'out-cubic')
