@@ -18,6 +18,7 @@ class TextBox extends CutsceneObject
 			-- table of strings
 			texts: nil
 			corner_roundness: 6
+			is_bottom: false
 
 			foreground_colour: 'b_pink'
 			background_colour: 'b_white'
@@ -37,9 +38,11 @@ class TextBox extends CutsceneObject
 		@text = ''
 		@text_alpha = 0
 
-		@go_to_next_text!
+		if args.is_bottom then @pos.y = SCREEN_HEIGHT - @pos.h - 10
 
 		@timer\every(0.5, (-> @is_triangle_down = not @is_triangle_down))
+
+		@go_to_next_text!
 
 	update: (dt) =>
 		super(dt)
