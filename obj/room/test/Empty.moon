@@ -11,21 +11,6 @@ class extends Room
 	new: (args = {}) =>
 		super(args)
 
-		@input = baton.new({
-			controls: {
-				left: { 'key:left', 'axis:leftx-' }
-				right: { 'key:right', 'axis:leftx+' }
-				up: { 'key:up', 'axis:lefty-' }
-				down: { 'key:down', 'axis:lefty+' }
-
-				interact: { 'key:z' }
-			}
-
-			pairs: {
-				move: { 'left', 'right', 'up', 'down' }
-			}
-		})
-
 	update: (dt) =>
 		super(dt)
 
