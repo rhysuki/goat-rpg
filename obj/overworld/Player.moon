@@ -109,7 +109,11 @@ class Player extends Actor
 		for col in *@area_trigger.cols
 			context = col.other.context
 			if not context then continue
-			if context.activate and @is_facing(context) and @input\pressed('interact')
+
+			if context.activate and
+				@is_facing(context) and
+				@input\pressed('interact') and
+				@is_input_enabled
 				context\activate!
 
 	-- @treturn number, number
