@@ -1,3 +1,4 @@
+import colour from require 'help.graphics'
 import safe_copy from require 'help.table'
 import is from require 'help.type'
 
@@ -47,6 +48,14 @@ class Player extends Actor
 		@check_interactibles!
 
 		@camera_target.x, @camera_target.y = @pos.x + 6, @pos.y
+
+	draw: =>
+		super!
+
+		if DEBUG_FLAGS.show_positions
+			colour('test_blue')
+			LG.print("x: #{@pos.x}\ny: #{@pos.y}", @pos.x, @pos.y + 3)
+			colour!
 
 	--
 
