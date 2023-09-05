@@ -40,3 +40,8 @@ class PlayerCutsceneController extends GameObject
 	move_toward: (direction, seconds) =>
 		@set_move(direction)
 		wait(seconds)
+
+	-- moves the player for some amount of seconds, then stops.
+	move_and_stop: (direction, seconds) =>
+		@move_toward(direction, seconds)
+		@set_move('none')
