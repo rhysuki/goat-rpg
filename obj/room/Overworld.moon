@@ -4,10 +4,12 @@ Room = require 'obj.room.Room'
 Hitbox = require 'obj.overworld.Hitbox'
 Player = require 'obj.overworld.Player'
 Map = require 'obj.overworld.Map'
+Cutscene = require 'obj.cutscene.Cutscene'
 
 bump = require 'lib.bump'
 pubsub = require 'lib.bat.pubsub'
 colours = require 'data.colours'
+cutscenes = require 'data.cutscenes'
 
 class Overworld extends Room
 	new: (args = {}) =>
@@ -60,3 +62,6 @@ class Overworld extends Room
 	find_exit_with_id: (id) =>
 		for obj in *@members.list
 			if obj.exit_id == id then return obj
+
+	add_cutscene: (name) =>
+		@add(Cutscene, { sequence: cutscenes[name](@) })
