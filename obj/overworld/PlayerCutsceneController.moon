@@ -36,7 +36,7 @@ class PlayerCutsceneController extends GameObject
 
 		@player\set_move(@player\get_direction_axis(direction))
 
-	-- moves the player for some amount of seconds.
-	move_and_wait: (direction, seconds) =>
+	-- moves the player in this direction for some amount of seconds.
+	move_toward: (direction, seconds) =>
 		@set_move(direction)
 		wait(seconds)
