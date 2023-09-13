@@ -5,11 +5,13 @@ Hitbox = require 'obj.overworld.Hitbox'
 Player = require 'obj.overworld.Player'
 Map = require 'obj.overworld.Map'
 Cutscene = require 'obj.cutscene.Cutscene'
+TextBox = require 'obj.cutscene.TextBox'
 
 bump = require 'lib.bump'
 pubsub = require 'lib.bat.pubsub'
 colours = require 'data.colours'
 cutscenes = require 'data.cutscenes'
+texts = require 'data.texts'
 
 class Overworld extends Room
 	new: (args = {}) =>
@@ -63,5 +65,13 @@ class Overworld extends Room
 		for obj in *@members.list
 			if obj.exit_id == id then return obj
 
+	-- @treturn obj
 	add_cutscene: (name) =>
 		@add(Cutscene, { sequence: cutscenes[name](@) })
+
+	-- @treturn obj
+	add_text_box: (text_name) =>
+		return @add(TextBox, {
+			texts: texts[text_name]
+			is_bottom: not (@camera\toScreen(@player.pos.x, @player.pos.y) < SCREEN_HEIGHT / 2)
+		}, 100)
