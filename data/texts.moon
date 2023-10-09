@@ -1,7 +1,10 @@
 {
-	test: {
-		'so this is a test obviously'
-		'check it out'
-		'o(-('
+	test1: {
+		"[The lever makes a satisfying *kh-thunk*!]"
+	}
+
+	test2: {
+		"..."
+		"[Um, did something change?]"
 	}
 }
