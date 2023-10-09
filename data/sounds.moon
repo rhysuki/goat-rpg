@@ -1,9 +1,9 @@
 import newSource from L.audio
-
-ripple = require 'lib.ripple'
-
-test_tag = ripple.newTag!
+import newSound from require 'lib.ripple'
 
 {
-	test: ripple.newSound(newSource('data/snd/test/lets_practice.ogg', 'stream'))
+	test: newSound(newSource('data/snd/test/lets_practice.ogg', 'stream'))
+
+	sprint: newSound(newSource('data/snd/test/sprint.ogg', 'static'))
+	cannon: newSound(newSource('data/snd/test/cannon.ogg', 'static'))
 }
