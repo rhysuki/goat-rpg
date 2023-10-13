@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="17" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="81">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="17" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="81">
  <editorsettings>
   <export target="test.lua" format="lua"/>
  </editorsettings>
- <tileset firstgid="1" name="test" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="11" columns="11">
-  <image source="../tilesets/test.png" width="198" height="18"/>
+ <tileset firstgid="1" name="test" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="15" columns="15">
+  <image source="../tilesets/test.png" width="270" height="18"/>
   <tile id="1">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0" width="16" height="16"/>
@@ -126,7 +126,7 @@
     <property name="world" value="interaction"/>
    </properties>
   </object>
-  <object id="77" type="obj.overworld.LeverSwitch" x="112" y="144">
+  <object id="77" type="obj.overworld.LeverSwitch" x="128" y="112">
    <properties>
     <property name="actor_name" value="lever"/>
     <property name="pubsub" value="test"/>
@@ -134,7 +134,7 @@
    </properties>
    <point/>
   </object>
-  <object id="78" type="obj.overworld.test.Billboard" x="112" y="96">
+  <object id="78" type="obj.overworld.test.Billboard" x="208" y="32">
    <properties>
     <property name="pubsub_event" value="test"/>
    </properties>
@@ -149,7 +149,7 @@
     <property name="transition_name" value="circle"/>
    </properties>
   </object>
-  <object id="80" type="obj.overworld.Exit" x="192" y="112" width="16" height="16">
+  <object id="80" type="obj.overworld.Exit" x="240" y="160" width="16" height="16">
    <properties>
     <property name="direction" value="right"/>
     <property name="exit_id" type="int" value="2"/>
