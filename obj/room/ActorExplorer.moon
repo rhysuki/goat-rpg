@@ -1,4 +1,5 @@
 import colour from require 'help.graphics'
+import n_sin from require 'help.math'
 
 Actor = require 'obj.overworld.Actor'
 Room = require 'obj.room.Room'
@@ -9,6 +10,8 @@ actors = require 'data.actors'
 class ActorExplorer extends Room
 	new: (args = {}) =>
 		super(args)
+
+		@pos_info_alpha = 0
 
 		@actor_names = [k for k in pairs actors]
 		table.sort(@actor_names)
@@ -31,16 +34,16 @@ class ActorExplorer extends Room
 		super(dt)
 
 		@move_actor_number!
-
 		-- wrap around from 1 to #@actor_names
 		@actor_number = ((@actor_number - 1) % #@actor_names) + 1
-
 		@check_refresh_current_actor!
+		@pos_info_alpha += 1
 
 	draw_in_camera: =>
 		@draw_actor_origin!
 		super!
 		@draw_actor_list!
+		@draw_position!
 
 	--
 
@@ -95,6 +98,20 @@ class ActorExplorer extends Room
 
 			LG.print(actor_name, 5, y - (@actor_number * 10))
 
+			colour!
+
+	draw_position: =>
+		if @current_actor
+			x = @current_actor.pos.x
+			y = @current_actor.pos.y
+			alpha = n_sin(@pos_info_alpha, 0.1)
+
+			colour('b_pink', alpha * 0.7)
+			LG.circle('line', x, y, 4)
+			LG.line(x - 8, y, x + 8, y)
+			LG.line(x, y - 8, x, y + 8)
+			colour('b_green', alpha)
+			LG.points(x, y)
 			colour!
 
 	-- @treturn number
