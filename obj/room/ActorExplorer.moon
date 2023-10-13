@@ -70,8 +70,8 @@ class ActorExplorer extends Room
 		})
 
 		with @current_actor
-			.pos.x = @actor_origin.x - (.hitbox.pos.w / 2)
-			.pos.y = @actor_origin.y - .hitbox.pos.h
+			.pos.x = math.floor(@actor_origin.x - (.hitbox.pos.w / 2))
+			.pos.y = math.floor(@actor_origin.y - .hitbox.pos.h)
 
 		@current_actor\update(0.016)
 
