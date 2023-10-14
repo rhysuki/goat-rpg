@@ -21,17 +21,20 @@
 
 	house_bed: {
 		sprite: { path: '*/house/bed', initial_tag: 'main' }
-		hitbox: { pos: { w: 25, h: 28 } }
+		hitbox: { pos: { w: 24, h: 24 } }
+		tags: { 'furniture' }
 	}
 
 	house_chair: {
 		sprite: { path: '*/house/chair', initial_tag: 'main' }
-		hitbox: { pos: { w: 9, h: 4 } }
+		hitbox: { pos: { w: 8, h: 4 } }
+		tags: { 'furniture' }
 	}
 
 	house_coffee_table: {
 		sprite: { path: '*/house/coffee_table', initial_tag: 'main' }
-		hitbox: { pos: { w: 20, h: 26 } }
+		hitbox: { pos: { w: 20, h: 24 } }
+		tags: { 'furniture' }
 	}
 
 	house_cooktop: {
@@ -41,51 +44,61 @@
 
 	house_couch: {
 		sprite: { path: '*/house/couch', initial_tag: 'main' }
-		hitbox: { pos: { w: 16, h: 25 } }
+		hitbox: { pos: { w: 16, h: 22 } }
+		tags: { 'furniture' }
 	}
 
 	house_counter: {
 		sprite: { path: '*/house/counter', initial_tag: 'main' }
 		hitbox: { pos: { w: 64, h: 6 } }
+		tags: { 'furniture' }
 	}
 
 	house_desk: {
 		sprite: { path: '*/house/desk', initial_tag: 'main' }
 		hitbox: { pos: { w: 30, h: 14 } }
+		tags: { 'furniture' }
 	}
 
 	house_fridge: {
 		sprite: { path: '*/house/fridge', initial_tag: 'main' }
 		hitbox: { pos: { w: 16, h: 8 } }
+		tags: { 'furniture' }
 	}
 
 	house_rack: {
 		sprite: { path: '*/house/rack', initial_tag: 'main' }
 		hitbox: { pos: { w: 16, h: 25 } }
+		tags: { 'furniture' }
 	}
 
 	house_rug: {
 		sprite: { path: '*/house/rug', initial_tag: 'main' }
 		hitbox: { pos: { w: 46, h: 47 } }
+		tags: { 'furniture' }
 	}
 
 	house_table: {
 		sprite: { path: '*/house/table', initial_tag: 'main' }
 		hitbox: { pos: { w: 30, h: 32 } }
+		tags: { 'furniture' }
 	}
 
 	house_trashcan: {
 		sprite: { path: '*/house/trashcan', initial_tag: 'main' }
 		hitbox: { pos: { w: 7, h: 3 } }
+		tags: { 'furniture' }
 	}
 
 	house_rack: {
 		sprite: { path: '*/house/rack', initial_tag: 'main' }
 		hitbox: { pos: { w: 16, h: 25 } }
+		tags: { 'furniture' }
 	}
 
 	house_wardrobe: {
 		sprite: { path: '*/house/wardrobe', initial_tag: 'main' }
 		hitbox: { pos: { w: 14, h: 9 } }
+		tags: { 'furniture' }
 	}
 }

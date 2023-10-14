@@ -29,6 +29,12 @@ class Actor extends GameObject
 
 		super(room, args)
 
+		@filter = (other) ->
+			if @hitbox\has_tag('furniture') and other.context.hitbox\has_tag('furniture')
+				return 'cross'
+
+			return 'slide'
+
 		with actors[args.actor_name]
 			@sprite = @room\add(Peachy, {
 				path: .sprite.path
@@ -39,6 +45,8 @@ class Actor extends GameObject
 				pos: { w: .hitbox.pos.w, h: .hitbox.pos.h }
 				world: args.world
 				context: @
+				filter: @filter
+				tags: .tags
 			})
 
 			@area_trigger = @room\add(AreaTrigger, {

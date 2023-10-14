@@ -26,6 +26,8 @@ class Hitbox extends GameObject
 
 			world: nil
 			filter: -> 'slide'
+			-- list of strings
+			tags: nil
 
 			context: nil
 		}, args)
@@ -37,9 +39,10 @@ class Hitbox extends GameObject
 		-- the object this belongs to, if any.
 		@context = args.context
 
-		@cols = {}
 		@debug_colour = 'white'
 		@debug_alpha = 0.5
+		@cols = {}
+		@tags = @create_tags_table(args.tags)
 
 		@world\add(@, @pos.x, @pos.y, @pos.w, @pos.h)
 
@@ -66,3 +69,18 @@ class Hitbox extends GameObject
 	die: =>
 		super!
 		@world\remove(@)
+
+	-- @treturn tab
+	create_tags_table: (tags = {}) =>
+		out = {}
+
+		for tag in *tags
+			print tag
+			out[tag] = true
+
+		return out
+
+	-- @treturn boolean
+	has_tag: (tag) =>
+		if @tags[tag] then return true
+		return false
