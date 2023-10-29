@@ -75,3 +75,5 @@ class Overworld extends Room
 			texts: texts[text_name]
 			is_bottom: not (@camera\toScreen(@player.pos.x, @player.pos.y) < SCREEN_HEIGHT / 2)
 		}, 100)
+
+		return @add(Textbox\from_string(text_name, @player.pos), 100)

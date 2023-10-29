@@ -8,7 +8,7 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 11,
+  nextlayerid = 13,
   nextobjectid = 81,
   properties = {},
   tilesets = {
@@ -20,7 +20,7 @@ return {
       spacing = 2,
       margin = 1,
       columns = 15,
-      image = "../tilesets/test.png",
+      image = "../../tilesets/test.png",
       imagewidth = 270,
       imageheight = 18,
       objectalignment = "unspecified",

@@ -4,7 +4,7 @@
   <export target="exit_test.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="outside" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="8" columns="8">
-  <image source="../../img/tilesets/outside.png" width="144" height="18"/>
+  <image source="../../tilesets/outside.png" width="144" height="18"/>
   <tile id="1">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0" width="16" height="16"/>
@@ -42,7 +42,7 @@
   </tile>
  </tileset>
  <tileset firstgid="9" name="test" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="15" columns="15">
-  <image source="../tilesets/test.png" width="270" height="18"/>
+  <image source="../../tilesets/test.png" width="270" height="18"/>
   <tile id="1">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0" width="16" height="16"/>

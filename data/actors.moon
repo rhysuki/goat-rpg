@@ -39,7 +39,7 @@
 
 	house_cooktop: {
 		sprite: { path: '*/house/cooktop', initial_tag: 'main' }
-		hitbox: { pos: { w: 23, h: 55 } }
+		hitbox: { pos: { w: 23, h: 46 } }
 	}
 
 	house_couch: {
