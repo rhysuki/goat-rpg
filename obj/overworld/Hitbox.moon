@@ -75,7 +75,6 @@ class Hitbox extends GameObject
 		out = {}
 
 		for tag in *tags
-			print tag
 			out[tag] = true
 
 		return out

@@ -4,7 +4,7 @@ import safe_copy from require 'help.table'
 GameObject = require 'obj.GameObject'
 Peachy = require 'obj.Peachy'
 Hitbox = require 'obj.overworld.Hitbox'
-AreaTrigger = require 'obj.overworld.AreaTrigger'
+ActorAreaTrigger = require 'obj.overworld.ActorAreaTrigger'
 
 actors = require 'data.actors'
 
@@ -49,7 +49,7 @@ class Actor extends GameObject
 				tags: .tags
 			})
 
-			@area_trigger = @room\add(AreaTrigger, {
+			@area_trigger = @room\add(ActorAreaTrigger, {
 				pos: {
 					x: @hitbox.pos.x - 3
 					y: @hitbox.pos.y - 3
@@ -58,6 +58,7 @@ class Actor extends GameObject
 				}
 				world: args.interaction_world
 				context: @
+				parent: @
 			})
 
 		@hitbox\set_position(@pos.x, @pos.y)
@@ -98,3 +99,9 @@ class Actor extends GameObject
 
 		@sprite.pos.x = @hitbox.pos.x + (@hitbox.pos.w / 2) - (w / 2)
 		@sprite.pos.y = @hitbox.pos.y + @hitbox.pos.h - h
+
+	on_area_trigger_enter: =>
+
+	on_area_trigger_stay: =>
+
+	on_area_trigger_exit: =>
