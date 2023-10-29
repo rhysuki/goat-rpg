@@ -101,4 +101,10 @@
 		hitbox: { pos: { w: 14, h: 9 } }
 		tags: { 'furniture' }
 	}
+
+	house_door: {
+		sprite: {  path: '*/house/door', initial_tag: 'closed' }
+		hitbox: { pos: { w: 2, h: 6 } }
+		tags: { 'furniture' }
+	}
 }
