@@ -34,6 +34,10 @@ class GameObject
 
 	--
 
+	set_position: (x = @pos.x, y = @pos.y) =>
+		@pos.x = x
+		@pos.y = y
+
 	-- shuts everything off and awaits removal from @members.
 	-- !! in objects with inner objects, remember to call their @Die
 	-- too!
