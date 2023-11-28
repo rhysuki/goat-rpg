@@ -4,11 +4,9 @@ timer = require 'lib.timer'
 colours = require 'data.colours'
 
 class FlashyAreaTrigger extends AreaTrigger
-	new: (room, args = {}) =>
-		super(room, args)
-
+	new: (room) =>
+		super(room)
 		@timer = timer!
-
 		@colour = @get_colour('b_purple')
 
 	update: (dt) =>
@@ -17,7 +15,7 @@ class FlashyAreaTrigger extends AreaTrigger
 
 	draw: =>
 		LG.setColor(@colour)
-		LG.rectangle('fill', @pos.x - 4, @pos.y - 4, @pos.w + 6, @pos.h + 6, 5, 5)
+		LG.rectangle('fill', @x - 4, @y - 4, @width + 6, @height + 6, 5, 5)
 		LG.setColor(1, 1, 1, 1)
 
 		super!
