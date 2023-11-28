@@ -13,16 +13,11 @@ class Interactible extends Actor
 
 		return out
 
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pubsub: nil
-			pubsub_event: ''
-		}, args)
+		-- maybe something like this instead?
+		-- return @(room, room.pubsubs[object.properties.pubsub, object.properties.pubsub_event)
 
-		super(room, args)
-
-		@pubsub = args.pubsub
-		@pubsub_event = args.pubsub_event
+	new: (room, @pubsub, @pubsub_event) =>
+		super(room)
 
 	--
 
