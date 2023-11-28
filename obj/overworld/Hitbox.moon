@@ -25,7 +25,7 @@ class Hitbox extends GameObject
 		@debug_alpha = 0.5
 		@cols = {}
 
-		@world\add(@, @pos.x, @pos.y, @width, @height)
+		@world\add(@, @x, @y, @width, @height)
 
 	draw: =>
 		if DEBUG_FLAGS.show_hitboxes
@@ -37,14 +37,14 @@ class Hitbox extends GameObject
 
 	set_position: (x, y) =>
 		super(x, y)
-		@world\update(@, @pos.x, @pos.y)
+		@world\update(@, @x, @y)
 
 	set_dimensions: (w, h) =>
-		@pos.w, @pos.h = w, h
-		@world\update(@, @pos.x, @pos.y, @width, @height)
+		@width, @height = w, h
+		@world\update(@, @x, @y, @width, @height)
 
 	move_to: (x, y) =>
-		@pos.x, @pos.y, cols = @world\move(@, x, y, @filter)
+		@x, @y, cols = @world\move(@, x, y, @filter)
 		@cols = cols
 
 	die: =>
@@ -53,5 +53,5 @@ class Hitbox extends GameObject
 
 	-- @treturn tab
 	check_collisions: =>
-		_, _, cols = @world\check(@, @pos.x, @pos.y)
+		_, _, cols = @world\check(@, @x, @y)
 		return cols

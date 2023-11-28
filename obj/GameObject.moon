@@ -15,13 +15,14 @@ class GameObject
 		return { pos: { x: object.x, y: object.y }}
 
 	new: (@room) =>
-		@pos = { x: 0, y: 0 }
+		@x = 0
+		@y = 0
 
 		@is_active = true
 		@is_visible = true
 		@is_dead = false
 		@is_auto_draw_depth_enabled = false
-		-- the y offset between @pos.y and the "foot" of this object.
+		-- the y offset between @y and the "foot" of this object.
 		@depth_height = 0
 
 		@time_created = L.timer.getTime!
@@ -34,9 +35,9 @@ class GameObject
 
 	--
 
-	set_position: (x = @pos.x, y = @pos.y) =>
-		@pos.x = x
-		@pos.y = y
+	set_position: (x = @x, y = @y) =>
+		@x = x
+		@y = y
 
 	-- shuts everything off and awaits removal from @members.
 	-- !! in objects with inner objects, remember to call their @Die
@@ -48,4 +49,4 @@ class GameObject
 
 	-- @treturn number
 	get_auto_draw_depth: =>
-		return (@pos.y + @depth_height) / 100
+		return (@y + @depth_height) / 100
