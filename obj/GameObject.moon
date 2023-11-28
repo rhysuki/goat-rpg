@@ -14,12 +14,8 @@ class GameObject
 	tiled_object_to_args: (room, object) =>
 		return { pos: { x: object.x, y: object.y }}
 
-	new: (room, args = {}) =>
-		@room = room
-		@members = room.members
-		@input = room.input
-
-		@pos = @pos or args.pos or { x: 0, y: 0 }
+	new: (@room) =>
+		@pos = { x: 0, y: 0 }
 
 		@is_active = true
 		@is_visible = true
