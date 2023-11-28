@@ -7,13 +7,8 @@ colours = require 'data.colours'
 timer = require 'lib.timer'
 
 class Billboard extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
-
-		out.pubsub = room.pubsubs.test
-		out.pubsub_event = object.properties.pubsub_event
-
-		return out
+	from_tiled_object: (room, object) =>
+		return @(room, room.pubsubs.test, object.properties.pubsub_event)
 
 	new: (room, @pubsub, @pubsub_event = '') =>
 		super(room)
