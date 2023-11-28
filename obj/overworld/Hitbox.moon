@@ -15,27 +15,11 @@ class Hitbox extends GameObject
 
 		return out
 
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pos: {
-				x: 0
-				y: 0
-				w: 16
-				h: 16
-			}
+	new: (room, @world) =>
+		super(room)
 
-			world: nil
-			filter: -> 'slide'
-
-			context: nil
-		}, args)
-
-		super(room, args)
-
-		@world = args.world
-		@filter = args.filter
-		-- the object this belongs to, if any.
-		@context = args.context
+		@pos.w = 16
+		@pos.h = 16
 
 		@debug_colour = 'white'
 		@debug_alpha = 0.5
@@ -46,22 +30,22 @@ class Hitbox extends GameObject
 	draw: =>
 		if DEBUG_FLAGS.show_hitboxes
 			colour(@debug_colour, @debug_alpha)
-			LG.rectangle('line', @pos.x, @pos.y, @pos.w, @pos.h)
+			LG.rectangle('line', @world\getRect(@))
 			colour!
 
 	--
 
-	move_to: (x, y) =>
-		@pos.x, @pos.y, cols = @world\move(@, x, y, @filter)
-		@cols = cols
-
 	set_position: (x, y) =>
-		@pos.x, @pos.y = x, y
+		super(x, y)
 		@world\update(@, @pos.x, @pos.y)
 
 	set_dimensions: (w, h) =>
 		@pos.w, @pos.h = w, h
 		@world\update(@, @pos.x, @pos.y, @pos.w, @pos.h)
+
+	move_to: (x, y) =>
+		@pos.x, @pos.y, cols = @world\move(@, x, y, @filter)
+		@cols = cols
 
 	die: =>
 		super!
