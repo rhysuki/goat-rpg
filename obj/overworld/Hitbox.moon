@@ -50,3 +50,8 @@ class Hitbox extends GameObject
 	die: =>
 		super!
 		@world\remove(@)
+
+	-- @treturn tab
+	check_collisions: =>
+		_, _, cols = @world\check(@, @pos.x, @pos.y)
+		return cols
