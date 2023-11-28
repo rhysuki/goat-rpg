@@ -3,7 +3,6 @@ import safe_copy from require 'help.table'
 
 EmptyRoom = require 'obj.room.test.Empty'
 Player = require 'obj.overworld.Player'
-AreaTrigger = require 'obj.overworld.AreaTrigger'
 Overworld = require 'obj.room.Overworld'
 CircleTransition = require 'obj.room.transition.CircleTransition'
 
@@ -20,23 +19,8 @@ class Exit extends AreaTrigger
 
 		return out
 
-	new: (room, args = {}) =>
-		args = safe_copy({
-			target_room_name: ''
-			transition_name: ''
-			direction: ''
-
-			exit_id: nil
-			target_exit_id: nil
-		}, args)
-
-		super(room, args)
-
-		@target_room_name = args.target_room_name
-		@transition_name = args.transition_name
-		@direction = args.direction
-		@exit_id = args.exit_id
-		@target_exit_id = args.target_exit_id
+	new: (room, @exit_id, @target_exit_id, @target_room_name, @direction, @transition_name) =>
+		super(room)
 
 		@is_exit_enabled = true
 
@@ -94,11 +78,11 @@ class Exit extends AreaTrigger
 	-- @treturn number, number
 	get_player_exit_pos: (dir = @direction) =>
 		offset = 50
-		center_x = @pos.x + (@pos.w / 2) - 6
-		center_y = @pos.y + (@pos.h / 2)
+		center_x = @x + (@width / 2) - 6
+		center_y = @y + (@height / 2)
 
 		switch dir
-			when 'right' then return @pos.x + offset, center_y
-			when 'left' then return @pos.x + @pos.w - offset, center_y
-			when 'down' then return center_x, @pos.y + offset
-			when 'up' then return center_x, @pos.y + @pos.h - offset
+			when 'right' then return @x + offset, center_y
+			when 'left' then return @x + @width - offset, center_y
+			when 'down' then return center_x, @y + offset
+			when 'up' then return center_x, @y + @height - offset
