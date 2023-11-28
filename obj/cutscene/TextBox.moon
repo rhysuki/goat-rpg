@@ -77,6 +77,11 @@ class TextBox extends CutsceneObject
 	draw_triangle: (x, y) =>
 		LG.polygon('fill', x, y, x + 5, y, x + 3, y + 3)
 
+	set_style: (cr = @corner_roundness, fg = @foreground_colour, bg = @background_colour) =>
+		@corner_roundness = cr
+		@foreground_colour = fg
+		@background_colour = bg
+
 	-- @treturn number, number, number, number, number, number
 	get_rect: =>
 		return @x, @y, @width, @height, @corner_roundness, @corner_roundness
