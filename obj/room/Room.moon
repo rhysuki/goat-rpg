@@ -9,7 +9,7 @@ gamera = require 'lib.gamera'
 transitions = require 'data.transitions'
 
 class Room extends State
-	new: (args = {}) =>
+	new: =>
 		-- always passes STAGE as its owner stateMachine, and has no
 		-- context.
 		super(STAGE)
