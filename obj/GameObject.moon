@@ -1,7 +1,7 @@
 class GameObject
 	-- gets called when this comes from a tiled object.
 	-- @treturn obj
-	from_tiled_object: (room) =>
+	from_tiled_object: (room, object) =>
 		return @(room)
 
 	new: (@room) =>

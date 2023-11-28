@@ -1,17 +1,16 @@
 -- mainly, an object with a hitbox and sprite that exists in the map.
+import create_actor_instances from require 'help.object'
+
 GameObject = require 'obj.GameObject'
 
 class Actor extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
-
-		with object.properties
-			out.actor_name = .actor_name
-			out.world = room.worlds[.world] or room.worlds.collision
-			out.interaction_world = room.worlds[.interaction_world] or
-				room.worlds.interaction
-
-		return out
+	from_tiled_object: (room, object) =>
+		return @(room, create_actor_instances(
+			room
+			object.properties.actor_name
+			room.worlds.collision
+			room.worlds.interaction
+		))
 
 	new: (room, @sprite, @hitbox, @area_trigger) =>
 		super(room)
