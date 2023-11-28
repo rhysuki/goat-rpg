@@ -7,20 +7,19 @@ CircleTransition = require 'obj.room.transition.CircleTransition'
 
 -- TODO: walking animation and right positioning
 class Exit extends AreaTrigger
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
-
-		out.target_room_name = object.properties.target_room_name
-		out.transition_name = object.properties.transition_name
-		out.direction = object.properties.direction
-		out.exit_id = object.properties.exit_id
-		out.target_exit_id = object.properties.target_exit_id
-
-		return out
+	from_tiled_object: (room, object) =>
+		with object.properties
+			return @(
+				room
+				.exit_id
+				.target_exit_id
+				.target_room_name
+				.direction
+				.transition_name
+			)
 
 	new: (room, @exit_id, @target_exit_id, @target_room_name, @direction, @transition_name) =>
 		super(room)
-
 		@is_exit_enabled = true
 
 	--
