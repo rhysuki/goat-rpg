@@ -57,24 +57,26 @@ class Map extends GameObject
 	--- adds all the objects in @objects to @members.
 	add_objects: (objects = @objects) =>
 		for object in *objects
-			@members\add(object)
+			@room.members\add(object)
 
 	--- instantiates the given tiled object. its "type" attribute should
 	-- be a string that's a require path (like "obj.GameObject").
 	-- its associated class MUST have a static from_tiled_object method.
 	-- @treturn GameObject
 	instantiate: (object) =>
-		class_path = object.type
+		path = object.type
+		ok, obj_class = pcall(require, path)
 
-		if not L.filesystem.getInfo(to_file_path(class_path))
-			error("class #{class_path} not found \n#{@path} at #{object.x},#{object.y}")
+		assert(ok, "class not found:\n#{path}\nat #{object.x}, #{object.y}")
+		assert(
+			obj_class.from_tiled_object
+			"#{obj_class.__name} doesn't have a from_tiled_object method"
+		)
 
-		object_class = require class_path
+		obj = with obj_class\from_tiled_object(@room, object)
+			\set_position(object.x, object.y)
 
-		if not object_class.from_tiled_object
-			error("class #{object_class.__name} doesn't have a static from_tiled_object method")
-
-		return object_class\from_tiled_object(@room, object)
+		return obj
 
 	--- returns the dimensions, in pixels, of @cartographer.
 	-- @treturn int, int
@@ -95,6 +97,28 @@ class Map extends GameObject
 				INSERT(out, shape)
 
 		return out
+
+	--- makes a properly arranged table off the given tile.
+	-- @treturn tab
+	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
+		collision = tile.objectGroup.objects[1]
+		{ x: shape_x, y: shape_y, width: w, height: h } = collision
+
+		return {
+			x: pos_x + shape_x
+			y: pos_y + shape_y
+			:w
+			:h
+
+			:grid_x
+			:grid_y
+
+			:gid
+			:tile
+			:collision
+
+			is_solid: true
+		}
 
 	-- like @get_tiled_objects, but instantiated.
 	-- @treturn tab
@@ -142,24 +166,3 @@ class Map extends GameObject
 
 		return tile
 
-	--- makes a properly arranged table off the given tile.
-	-- @treturn tab
-	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
-		collision = tile.objectGroup.objects[1]
-		{ x: shape_x, y: shape_y, width: w, height: h } = collision
-
-		return {
-			x: pos_x + shape_x
-			y: pos_y + shape_y
-			:w
-			:h
-
-			:grid_x
-			:grid_y
-
-			:gid
-			:tile
-			:collision
-
-			is_solid: true
-		}
