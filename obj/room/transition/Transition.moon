@@ -5,11 +5,12 @@ timer = require 'lib.timer'
 assert = require 'lib.bat.assert'
 
 class Transition extends GameObject
-	new: (room,
+	new: (
+		room,
 		@next_room
 		@duration = 1,
 		@is_reversed = false,
-		@colour = 'black',
+		@colour = 'black'
 	) =>
 		super(room)
 
