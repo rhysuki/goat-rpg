@@ -22,6 +22,7 @@ class GameObject
 		@is_visible = true
 		@is_dead = false
 		@is_auto_draw_depth_enabled = false
+		@draw_depth = 0
 		-- the y offset between @y and the "foot" of this object.
 		@depth_height = 0
 
