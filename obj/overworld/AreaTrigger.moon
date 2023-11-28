@@ -13,8 +13,8 @@ class AreaTrigger extends Hitbox
 
 		return out
 
-	new: (room, args = {}) =>
-		super(room, args)
+	new: (room, world) =>
+		super(room, world)
 
 		@current_others = {}
 		@last_others = {}
@@ -27,7 +27,7 @@ class AreaTrigger extends Hitbox
 
 		-- what the fuck is any of this
 		@last_others = { col.other, true for col in *@cols }
-		_, _, @cols = @world\check(@, @pos.x, @pos.y, @filter)
+		_, _, @cols = @world\check(@, @x, @y, @filter)
 		@current_others = { col.other, true for col in *@cols }
 
 		for col in *@cols
