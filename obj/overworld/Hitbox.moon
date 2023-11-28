@@ -3,16 +3,11 @@ import colour from require 'help.graphics'
 GameObject = require 'obj.GameObject'
 
 class Hitbox extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
+	from_tiled_object: (room, object) =>
+		obj = with @(room, room.worlds.collision)
+			\set_dimensions(object.width, object.height)
 
-		out.pos.w = object.width
-		out.pos.h = object.height
-
-		out.world = room.worlds[object.properties.world] or
-			room.worlds.collision
-
-		return out
+		return obj
 
 	new: (room, @world) =>
 		super(room)
