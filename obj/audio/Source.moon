@@ -1,6 +1,5 @@
 -- an audio source that exists in 2d space. volume depends on distance
 -- between it and @listener.
-import safe_copy from require 'help.table'
 import colour from require 'help.graphics'
 import clamp, distance, smoothstep from require 'lib.bat.mathx'
 
@@ -22,21 +21,13 @@ class Source extends GameObject
 
 		return out
 
-	new: (room, args = {}) =>
-		args = safe_copy({
-			sound_name: nil
-			radius: 50
-			volume: 1
-			-- a table with x and y, like a GameObject's @pos.
-			listener: nil
-		}, args)
+	-- @listener is a table with x and y, like a GameObject
+	new: (room, @sound_name, @listener) =>
+		super(room)
 
-		super(room, args)
-
-		@sound = sounds[args.sound_name]
-		@radius = args.radius
-		@volume = args.volume
-		@listener = args.listener
+		@sound = sounds[@sound_name]
+		@radius = 50
+		@volume = 1
 
 		@instance = @sound\play!
 		@instance.volume = @get_volume!
@@ -47,9 +38,9 @@ class Source extends GameObject
 	draw: =>
 		if DEBUG_FLAGS.show_positions
 			colour('b_light_blue')
-			LG.circle('line', @pos.x, @pos.y, @radius)
+			LG.circle('line', @x, @y, @radius)
 			colour('b_blue')
-			LG.circle('line', @pos.x, @pos.y, 1)
+			LG.circle('line', @x, @y, 1)
 			colour!
 
 	--
@@ -57,6 +48,6 @@ class Source extends GameObject
 	-- calculates the volume based on the distance to the listener.
 	-- @treturn number
 	get_volume: =>
-		dist = distance(@pos.x, @pos.y, @listener.x, @listener.y)
+		dist = distance(@x, @y, @listener.x, @listener.y)
 		volume = clamp((1 - (dist / @radius)), 0, 1)
 		return smoothstep(volume) * @volume
