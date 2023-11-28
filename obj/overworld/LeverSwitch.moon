@@ -1,10 +1,8 @@
-import safe_copy from require 'help.table'
-
 Interactible = require 'obj.overworld.Interactible'
 
 class LeverSwitch extends Interactible
-	new: (room, args = {}) =>
-		super(room, args)
+	new: (room, pubsub, pubsub_event) =>
+		super(room, pubsub, pubsub_event)
 
 		@is_on = false
 		@sprite.is_looping = false

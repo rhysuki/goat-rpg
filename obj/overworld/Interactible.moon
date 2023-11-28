@@ -1,7 +1,5 @@
 -- an AreaTrigger that emits an event when interacted with.
 
-import safe_copy from require 'help.table'
-
 Actor = require 'obj.overworld.Actor'
 
 class Interactible extends Actor
