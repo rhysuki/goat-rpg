@@ -1,6 +1,4 @@
 -- a peachy instance, but it's a gameobject.
-
-import safe_copy from require 'help.table'
 import asterisk_complete from require 'help.string'
 import colour from require 'help.graphics'
 
