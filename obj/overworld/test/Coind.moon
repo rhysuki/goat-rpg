@@ -1,11 +1,10 @@
 GameObject = require 'obj.GameObject'
 
 class Coind extends GameObject
-	new: (room, args = {}) =>
-		super(room, args)
-
+	new: (room) =>
+		super(room)
 		@sprite = IMAGE\new_image('*/coind.png')
 
 	draw: =>
 		super!
-		LG.draw(@sprite, @pos.x, @pos.y)
+		LG.draw(@sprite, @x, @y)
