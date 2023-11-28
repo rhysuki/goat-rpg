@@ -1,5 +1,4 @@
 import colour from require 'help.graphics'
-import safe_copy from require 'help.table'
 
 Room = require 'obj.room.Room'
 GameObject = require 'obj.GameObject'
@@ -9,8 +8,7 @@ baton = require 'lib.baton'
 
 class Circle extends GameObject
 	new: (room, @colour) =>
-
-		super(room, args)
+		super(room)
 
 		@is_player = args.is_player
 

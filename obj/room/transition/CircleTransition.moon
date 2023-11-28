@@ -13,11 +13,6 @@ class CircleTransition extends Transition
 		is_reversed = false,
 		colour = 'black'
 	) =>
-		-- args = safe_copy({
-		-- 	-- a table with x and y fields. can be a pos?
-		-- 	target: room.camera
-		-- 	target_offset: { x: 0, y: 0 }
-		-- }, args)
 		super(room, next_room, duration, is_reversed, colour)
 
 		-- assuming the target is on screen, the radius'll never have to

@@ -1,5 +1,4 @@
 import is from require 'help.type'
-import safe_copy from require 'help.table'
 
 EmptyRoom = require 'obj.room.test.Empty'
 Player = require 'obj.overworld.Player'
