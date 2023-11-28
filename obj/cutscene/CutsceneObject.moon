@@ -7,8 +7,8 @@ GameObject = require 'obj.GameObject'
 async = require 'lib.bat.async'
 
 class CutsceneObject extends GameObject
-	new: (room, args = {}) =>
-		super(room, args)
+	new: (room) =>
+		super(room)
 		@is_done = false
 
 	--
