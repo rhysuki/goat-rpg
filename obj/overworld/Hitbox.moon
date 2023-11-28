@@ -18,14 +18,14 @@ class Hitbox extends GameObject
 	new: (room, @world) =>
 		super(room)
 
-		@pos.w = 16
-		@pos.h = 16
+		@width = 16
+		@height = 16
 
 		@debug_colour = 'white'
 		@debug_alpha = 0.5
 		@cols = {}
 
-		@world\add(@, @pos.x, @pos.y, @pos.w, @pos.h)
+		@world\add(@, @pos.x, @pos.y, @width, @height)
 
 	draw: =>
 		if DEBUG_FLAGS.show_hitboxes
@@ -41,7 +41,7 @@ class Hitbox extends GameObject
 
 	set_dimensions: (w, h) =>
 		@pos.w, @pos.h = w, h
-		@world\update(@, @pos.x, @pos.y, @pos.w, @pos.h)
+		@world\update(@, @pos.x, @pos.y, @width, @height)
 
 	move_to: (x, y) =>
 		@pos.x, @pos.y, cols = @world\move(@, x, y, @filter)
