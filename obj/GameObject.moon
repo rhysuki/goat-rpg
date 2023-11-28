@@ -1,5 +1,3 @@
--- TODO: could this class use a func like add_child_object that auto-calls
--- die() on all child objects?
 class GameObject
 	-- gets called when this comes from a tiled object.
 	-- @treturn obj
