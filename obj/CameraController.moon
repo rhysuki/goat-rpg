@@ -8,16 +8,9 @@ import lerp, round, clamp from require 'lib.bat.mathx'
 GameObject = require 'obj.GameObject'
 
 class CameraController extends GameObject
-	new: (room, camera = CAMERA, args = {}) =>
-		args = copy({
-			smoothing: 0.3
-		}, args)
-
-		super(room, args)
-
-		@camera = camera
+	new: (room, @camera = CAMERA, @smoothing = 0.3) =>
+		super(room)
 		@targets = {}
-		@smoothing = args.smoothing
 
 	update: (dt) =>
 		super(dt)
