@@ -3,16 +3,9 @@
 Actor = require 'obj.overworld.Actor'
 
 class Interactible extends Actor
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
-
-		out.pubsub = room.pubsubs[object.properties.pubsub]
-		out.pubsub_event = object.properties.pubsub_event
-
-		return out
-
-		-- maybe something like this instead?
-		-- return @(room, room.pubsubs[object.properties.pubsub, object.properties.pubsub_event)
+	from_tiled_object: (room, object) =>
+		with object.properties
+			return @(room, room.pubsubs[.pubsub], .pubsub_event)
 
 	new: (room, @pubsub, @pubsub_event) =>
 		super(room)
