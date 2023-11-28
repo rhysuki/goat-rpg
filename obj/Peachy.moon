@@ -10,13 +10,9 @@ peachy = require 'lib.peachy'
 -- TODO: make @activate! toggle this state
 -- TODO: link this to a pubsub
 class Peachy extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
-
-		out.path = object.properties.path
-		out.initial_tag = object.properties.initial_tag
-
-		return out
+	from_tiled_object: (room, object) =>
+		with object.properties
+			return @(room, .path, .initial_tag)
 
 	-- path is without extensions!!
 	new: (room, path, initial_tag) =>
