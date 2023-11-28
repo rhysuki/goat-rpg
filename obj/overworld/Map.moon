@@ -49,15 +49,67 @@ class Map extends GameObject
 	--
 
 	--- adds all the shapes in @shapes to @world.
-	add_shapes: (shapes = @shapes) =>
-		for shape in *shapes
+	add_shapes: =>
+		for shape in *@shapes
 			{ :x, :y, :w, :h } = shape
 			@world\add(shape, x, y, w, h)
 
+	--- gets a list of shapes within valid collision layers.
+	-- @treturn tab
+	get_shapes: =>
+		out = {}
+
+		for layer in *@valid_layers.collision
+			for id, gid, grid_x, grid_y, pos_x, pos_y in layer\getTiles!
+				tile = @get_tile_safely(gid, grid_x, grid_y, layer)
+				shape = @get_shape_table(gid, grid_x, grid_y, pos_x, pos_y, tile)
+
+				INSERT(out, shape)
+
+		return out
+
+	-- gets the tile at (grid_x, grid_y), but throws an useful message if
+	-- it doesn't exist.
+	-- @treturn tab
+	get_tile_safely: (gid, grid_x, grid_y, layer) =>
+		tile = assert(
+			@cartographer\getTile(gid)
+			"tile not found in layer #{layer.name} at #{grid_x}, #{grid_y} (gid #{gid}. no collision attached maybe?"
+		)
+
+		return tile
+
+	--- makes a properly arranged table off the given tile.
+	-- @treturn tab
+	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
+		collision = tile.objectGroup.objects[1]
+		{ x: shape_x, y: shape_y, width: w, height: h } = collision
+
+		return {
+			x: pos_x + shape_x
+			y: pos_y + shape_y
+			:w
+			:h
+
+			:grid_x
+			:grid_y
+
+			:gid
+			:tile
+			:collision
+
+			is_solid: true
+		}
+
 	--- adds all the objects in @objects to @members.
-	add_objects: (objects = @objects) =>
-		for object in *objects
+	add_objects: =>
+		for object in *@objects
 			@room.members\add(object)
+
+	-- like @get_tiled_objects, but instantiated.
+	-- @treturn tab
+	get_objects: =>
+		return [@instantiate(object) for object in *@get_tiled_objects!]
 
 	--- instantiates the given tiled object. its "type" attribute should
 	-- be a string that's a require path (like "obj.GameObject").
@@ -83,47 +135,6 @@ class Map extends GameObject
 	get_dimensions: =>
 		with @cartographer
 			return .width * .tilewidth, .height * .tileheight
-
-	--- gets a list of shapes within valid collision layers.
-	-- @treturn tab
-	get_shapes: =>
-		out = {}
-
-		for layer in *@valid_layers.collision
-			for id, gid, grid_x, grid_y, pos_x, pos_y in layer\getTiles!
-				tile = @get_tile_safely(gid, grid_x, grid_y, layer)
-				shape = @get_shape_table(gid, grid_x, grid_y, pos_x, pos_y, tile)
-
-				INSERT(out, shape)
-
-		return out
-
-	--- makes a properly arranged table off the given tile.
-	-- @treturn tab
-	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
-		collision = tile.objectGroup.objects[1]
-		{ x: shape_x, y: shape_y, width: w, height: h } = collision
-
-		return {
-			x: pos_x + shape_x
-			y: pos_y + shape_y
-			:w
-			:h
-
-			:grid_x
-			:grid_y
-
-			:gid
-			:tile
-			:collision
-
-			is_solid: true
-		}
-
-	-- like @get_tiled_objects, but instantiated.
-	-- @treturn tab
-	get_objects: =>
-		return [@instantiate(object) for object in *@get_tiled_objects!]
 
 	--- gets all tiled objects in the map.
 	-- @treturn tab
@@ -153,16 +164,3 @@ class Map extends GameObject
 				when 'objectgroup' then INSERT(out.object, layer)
 
 		return out
-
-	--- gets the tile based on x and y, but throws an useful message if
-	-- it doesn't exist.
-	-- @treturn tab
-	get_tile_safely: (gid, grid_x, grid_y, layer) =>
-		tile = @cartographer\getTile(gid)
-
-		-- fuckin dumb shit
-		if not tile
-			error "tile not found in layer #{layer.name} at #{grid_x}, #{grid_y} (gid #{gid}. no collision attached maybe?"
-
-		return tile
-
