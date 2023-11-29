@@ -9,7 +9,7 @@ gamera = require 'lib.gamera'
 transitions = require 'data.transitions'
 
 class Room extends State
-	new: (args = {}) =>
+	new: =>
 		-- always passes STAGE as its owner stateMachine, and has no
 		-- context.
 		super(STAGE)
@@ -53,11 +53,11 @@ class Room extends State
 
 		if out_transition then new_room\add_transition(out_transition)
 
-	--- quick add! doesn't work with objects that've been instantiated
-	-- already. use @members\add for that.
+	--- quick add! instantiates objects on the fly.
+	-- use @members.add for objects that are already instantiated.
 	-- @treturn obj
-	add: (obj_class, args = nil, draw_depth = nil) =>
-		return @members\add(obj_class(@, args), draw_depth)
+	add: (obj_class, ...) =>
+		return @members\add(obj_class(@, ...))
 
 	add_transition: (name, is_reversed = false) =>
 		transition_func = transitions[name]

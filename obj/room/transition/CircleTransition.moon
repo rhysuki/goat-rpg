@@ -1,20 +1,19 @@
 import colour from require 'help.graphics'
 import clamp, distance from require 'lib.bat.mathx'
-import safe_copy from require 'help.table'
 
 Transition = require 'obj.room.transition.Transition'
 
 class CircleTransition extends Transition
-	new: (room, args = {}) =>
-		args = safe_copy({
-			-- a table with x and y fields. can be a pos?
-			target: room.camera
-			target_offset: { x: 0, y: 0 }
-		}, args)
-		super(room, args)
-
-		@target = args.target
-		@target_offset = args.target_offset
+	new: (
+		room,
+		@target,
+		@target_offset = { x: 0, y: 0 },
+		next_room,
+		duration = 1,
+		is_reversed = false,
+		colour = 'black'
+	) =>
+		super(room, next_room, duration, is_reversed, colour)
 
 		-- assuming the target is on screen, the radius'll never have to
 		-- be bigger than this

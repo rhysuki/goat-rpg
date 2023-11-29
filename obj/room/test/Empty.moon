@@ -5,11 +5,13 @@ Room = require 'obj.room.Room'
 Source = require 'obj.audio.Source'
 
 baton = require 'lib.baton'
+bump = require 'lib.bump'
+pubsub = require 'lib.bat.pubsub'
 ripple = require 'lib.ripple'
 
 class extends Room
-	new: (args = {}) =>
-		super(args)
+	new: =>
+		super!
 
 	update: (dt) =>
 		super(dt)

@@ -1,27 +1,18 @@
 -- object that goes to @next_room when the timer ends.
-import safe_copy from require 'help.table'
-
 GameObject = require 'obj.GameObject'
 
 timer = require 'lib.timer'
 assert = require 'lib.bat.assert'
 
 class Transition extends GameObject
-	new: (room, args = {}) =>
-		args = safe_copy({
-			next_room: nil
-
-			is_reversed: false
-			duration: 1
-			colour: 'black'
-		}, args)
-
-		super(room, args)
-
-		@next_room = args.next_room
-		@is_reversed = args.is_reversed
-		@duration = args.duration
-		@colour = args.colour
+	new: (
+		room,
+		@next_room
+		@duration = 1,
+		@is_reversed = false,
+		@colour = 'black'
+	) =>
+		super(room)
 
 		@timer = timer!
 

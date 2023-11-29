@@ -8,8 +8,8 @@ bump = require 'lib.bump'
 actors = require 'data.actors'
 
 class ActorExplorer extends Room
-	new: (args = {}) =>
-		super(args)
+	new: =>
+		super!
 
 		@pos_info_alpha = 0
 

@@ -3,12 +3,14 @@
 -- by calling stall, they can keep updating and drawing while in an idle
 -- state until something triggers the @finish call.
 
+-- TODO: could this be merged with GameObject?
+
 GameObject = require 'obj.GameObject'
 async = require 'lib.bat.async'
 
 class CutsceneObject extends GameObject
-	new: (room, args = {}) =>
-		super(room, args)
+	new: (room) =>
+		super(room)
 		@is_done = false
 
 	--

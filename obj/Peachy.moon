@@ -1,6 +1,4 @@
 -- a peachy instance, but it's a gameobject.
-
-import safe_copy from require 'help.table'
 import asterisk_complete from require 'help.string'
 import colour from require 'help.graphics'
 
@@ -12,35 +10,16 @@ peachy = require 'lib.peachy'
 -- TODO: make @activate! toggle this state
 -- TODO: link this to a pubsub
 class Peachy extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
+	from_tiled_object: (room, object) =>
+		with object.properties
+			return @(room, .path, .initial_tag)
 
-		out.path = object.properties.path
-		out.initial_tag = object.properties.initial_tag
+	-- path is without extensions!!
+	new: (room, path, initial_tag) =>
+		super(room)
 
-		return out
-
-	new: (room, args = {}) =>
-		args = safe_copy({
-			-- path without extensions!
-			path: nil
-			initial_tag: nil
-
-			pos: {
-				x: 0
-				y: 0
-				r: 0
-				sx: 1
-				sy: 1
-				ox: 0
-				oy: 0
-			}
-		}, args)
-
-		super(room, args)
-
-		json_path, image_path = @get_paths(args.path)
-		@peachy = peachy.new(json_path, IMAGE\new_image(image_path), args.initial_tag)
+		json_path, image_path = @get_paths(path)
+		@peachy = peachy.new(json_path, IMAGE\new_image(image_path), initial_tag)
 
 		@is_looping = true
 		@is_auto_draw_depth_enabled = true
@@ -56,13 +35,12 @@ class Peachy extends GameObject
 			@depth_height = quad_height
 
 	draw: =>
-		with @pos
-			@peachy\draw(.x, .y, .r, .sx, .sy, .ox, .oy)
+		@peachy\draw(@x, @y, 0, 1, 1, 0, 0)
 
-			if DEBUG_FLAGS.show_positions
-				colour('b_green')
-				LG.print(@draw_depth, .x - 3, .y - 12)
-				colour!
+		if DEBUG_FLAGS.show_positions
+			colour('b_green')
+			LG.print(@draw_depth, @x - 3, @y - 12)
+			colour!
 
 	--
 

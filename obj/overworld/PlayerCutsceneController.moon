@@ -7,19 +7,11 @@ import wait from require 'lib.bat.async'
 GameObject = require 'obj.GameObject'
 
 class PlayerCutsceneController extends GameObject
-	new: (room, args = {}) =>
-		args = safe_copy({
-			player: nil
-		}, args)
+	new: (room, @player) =>
+		super(room)
 
-		super(room, args)
-
-		@player = args.player
 		@player.is_input_enabled = false
 		@set_move('none')
-
-	update: (dt) =>
-		super(dt)
 
 	--
 

@@ -1,4 +1,3 @@
-import safe_copy from require 'help.table'
 import colour from require 'help.graphics'
 
 CutsceneObject = require 'obj.cutscene.CutsceneObject'
@@ -6,32 +5,16 @@ CutsceneObject = require 'obj.cutscene.CutsceneObject'
 timer = require 'lib.timer'
 
 class TextBox extends CutsceneObject
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pos: {
-				x: 10
-				y: 10
-				w: SCREEN_WIDTH - 20
-				h: 60
-			}
+	new: (room, @texts) =>
+		super(room)
 
-			-- table of strings
-			texts: nil
-			corner_roundness: 6
-			is_bottom: false
+		@width = SCREEN_WIDTH - 20
+		@height = 60
 
-			foreground_colour: 'b_pink'
-			background_colour: 'b_white'
-		}, args)
-
-		super(room, args)
-
-		@texts = args.texts
-		@corner_roundness = args.corner_roundness
-		@foreground_colour = args.foreground_colour
-		@background_colour = args.background_colour
+		@corner_roundness = 6
+		@foreground_colour = 'b_pink'
+		@background_colour = 'b_white'
 		@is_triangle_down = false
-
 		@text_number = 0
 
 		@text = ''
@@ -39,8 +22,6 @@ class TextBox extends CutsceneObject
 
 		@input = @room.input
 		@timer = timer!
-
-		if args.is_bottom then @pos.y = SCREEN_HEIGHT - @pos.h - 10
 
 		@timer\every(0.5, (-> @is_triangle_down = not @is_triangle_down))
 
@@ -72,12 +53,12 @@ class TextBox extends CutsceneObject
 		LG.setLineWidth(1)
 
 		do
-			triangle_x = x + @pos.w - 12
-			triangle_y = y + @pos.h - 10 + (@is_triangle_down and 1 or 0)
+			triangle_x = x + @width - 12
+			triangle_y = y + @height - 10 + (@is_triangle_down and 1 or 0)
 			@draw_triangle(triangle_x, triangle_y)
 
 		colour(@foreground_colour, @text_alpha)
-		LG.printf(@text, x + 5, y, @pos.w - 10, 'left')
+		LG.printf(@text, x + 5, y, @width - 10, 'left')
 		colour!
 
 	--
@@ -96,6 +77,11 @@ class TextBox extends CutsceneObject
 	draw_triangle: (x, y) =>
 		LG.polygon('fill', x, y, x + 5, y, x + 3, y + 3)
 
+	set_style: (cr = @corner_roundness, fg = @foreground_colour, bg = @background_colour) =>
+		@corner_roundness = cr
+		@foreground_colour = fg
+		@background_colour = bg
+
 	-- @treturn number, number, number, number, number, number
 	get_rect: =>
-		return @pos.x, @pos.y, @pos.w, @pos.h, @corner_roundness, @corner_roundness
+		return @x, @y, @width, @height, @corner_roundness, @corner_roundness

@@ -1,28 +1,14 @@
 -- an AreaTrigger that emits an event when interacted with.
 
-import safe_copy from require 'help.table'
-
 Actor = require 'obj.overworld.Actor'
 
 class Interactible extends Actor
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
+	from_tiled_object: (room, object) =>
+		with object.properties
+			return @(room, room.pubsubs[.pubsub], .pubsub_event)
 
-		out.pubsub = room.pubsubs[object.properties.pubsub]
-		out.pubsub_event = object.properties.pubsub_event
-
-		return out
-
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pubsub: nil
-			pubsub_event: ''
-		}, args)
-
-		super(room, args)
-
-		@pubsub = args.pubsub
-		@pubsub_event = args.pubsub_event
+	new: (room, @pubsub, @pubsub_event) =>
+		super(room)
 
 	--
 

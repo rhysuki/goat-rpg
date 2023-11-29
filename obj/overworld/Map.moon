@@ -7,7 +7,6 @@
 -- the map with some properties.
 
 import colour from require 'help.graphics'
-import safe_copy from require 'help.table'
 import to_file_path, asterisk_complete from require 'help.string'
 
 GameObject = require 'obj.GameObject'
@@ -16,18 +15,13 @@ cartographer = require 'lib.cartographer'
 assert = require 'lib.bat.assert'
 
 class Map extends GameObject
-	new: (room, args = {}) =>
-		args = safe_copy({
-			world: nil
-			path: ''
-		}, args)
-		super(room, args)
+	new: (room, @world, path) =>
+		super(room)
 
-		@path = asterisk_complete(args.path, 'data/tiled/maps')
+		@path = asterisk_complete(path, 'data/tiled/maps')
 
 		assert(L.filesystem.getInfo(@path), "couldn't find map #{@path}.")
 
-		@world = args.world
 		@cartographer = cartographer.load(@path)
 
 		@valid_layers = @get_valid_layers!
@@ -55,38 +49,10 @@ class Map extends GameObject
 	--
 
 	--- adds all the shapes in @shapes to @world.
-	add_shapes: (shapes = @shapes) =>
-		for shape in *shapes
+	add_shapes: =>
+		for shape in *@shapes
 			{ :x, :y, :w, :h } = shape
 			@world\add(shape, x, y, w, h)
-
-	--- adds all the objects in @objects to @members.
-	add_objects: (objects = @objects) =>
-		for object in *objects
-			@members\add(object)
-
-	--- instantiates the given tiled object. its "type" attribute should
-	-- be a string that's a require path (like "obj.GameObject").
-	-- its associated class MUST have a static from_tiled_object method.
-	-- @treturn GameObject
-	instantiate: (object) =>
-		class_path = object.type
-
-		if not L.filesystem.getInfo(to_file_path(class_path))
-			error("class #{class_path} not found \n#{@path} at #{object.x},#{object.y}")
-
-		object_class = require class_path
-
-		if not object_class.from_tiled_object
-			error("class #{object_class.__name} doesn't have a static from_tiled_object method")
-
-		return object_class\from_tiled_object(@room, object)
-
-	--- returns the dimensions, in pixels, of @cartographer.
-	-- @treturn int, int
-	get_dimensions: =>
-		with @cartographer
-			return .width * .tilewidth, .height * .tileheight
 
 	--- gets a list of shapes within valid collision layers.
 	-- @treturn tab
@@ -102,10 +68,73 @@ class Map extends GameObject
 
 		return out
 
+	-- gets the tile at (grid_x, grid_y), but throws an useful message if
+	-- it doesn't exist.
+	-- @treturn tab
+	get_tile_safely: (gid, grid_x, grid_y, layer) =>
+		tile = assert(
+			@cartographer\getTile(gid)
+			"tile not found in layer #{layer.name} at #{grid_x}, #{grid_y} (gid #{gid}. no collision attached maybe?"
+		)
+
+		return tile
+
+	--- makes a properly arranged table off the given tile.
+	-- @treturn tab
+	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
+		collision = tile.objectGroup.objects[1]
+		{ x: shape_x, y: shape_y, width: w, height: h } = collision
+
+		return {
+			x: pos_x + shape_x
+			y: pos_y + shape_y
+			:w
+			:h
+
+			:grid_x
+			:grid_y
+
+			:gid
+			:tile
+			:collision
+
+			is_solid: true
+		}
+
+	--- adds all the objects in @objects to @members.
+	add_objects: =>
+		for object in *@objects
+			@room.members\add(object)
+
 	-- like @get_tiled_objects, but instantiated.
 	-- @treturn tab
 	get_objects: =>
 		return [@instantiate(object) for object in *@get_tiled_objects!]
+
+	--- instantiates the given tiled object. its "type" attribute should
+	-- be a string that's a require path (like "obj.GameObject").
+	-- its associated class MUST have a static from_tiled_object method.
+	-- @treturn GameObject
+	instantiate: (object) =>
+		path = object.type
+		ok, obj_class = pcall(require, path)
+
+		assert(ok, "class not found:\n#{path}\nat #{object.x}, #{object.y}")
+		assert(
+			obj_class.from_tiled_object
+			"#{obj_class.__name} doesn't have a from_tiled_object method"
+		)
+
+		obj = with obj_class\from_tiled_object(@room, object)
+			\set_position(object.x, object.y)
+
+		return obj
+
+	--- returns the dimensions, in pixels, of @cartographer.
+	-- @treturn int, int
+	get_dimensions: =>
+		with @cartographer
+			return .width * .tilewidth, .height * .tileheight
 
 	--- gets all tiled objects in the map.
 	-- @treturn tab
@@ -135,37 +164,3 @@ class Map extends GameObject
 				when 'objectgroup' then INSERT(out.object, layer)
 
 		return out
-
-	--- gets the tile based on x and y, but throws an useful message if
-	-- it doesn't exist.
-	-- @treturn tab
-	get_tile_safely: (gid, grid_x, grid_y, layer) =>
-		tile = @cartographer\getTile(gid)
-
-		-- fuckin dumb shit
-		if not tile
-			error "tile not found in layer #{layer.name} at #{grid_x}, #{grid_y} (gid #{gid}. no collision attached maybe?"
-
-		return tile
-
-	--- makes a properly arranged table off the given tile.
-	-- @treturn tab
-	get_shape_table: (gid, grid_x, grid_y, pos_x, pos_y, tile) =>
-		collision = tile.objectGroup.objects[1]
-		{ x: shape_x, y: shape_y, width: w, height: h } = collision
-
-		return {
-			x: pos_x + shape_x
-			y: pos_y + shape_y
-			:w
-			:h
-
-			:grid_x
-			:grid_y
-
-			:gid
-			:tile
-			:collision
-
-			is_solid: true
-		}

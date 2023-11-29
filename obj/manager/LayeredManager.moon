@@ -25,7 +25,6 @@ class LayeredManager extends GenericManager
 	--
 
 	add: (obj, depth = 0) =>
-		obj.draw_depth = depth
 		INSERT(@sorted_objects, obj)
 		return super(obj)
 

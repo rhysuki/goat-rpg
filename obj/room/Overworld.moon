@@ -1,5 +1,3 @@
-import safe_copy from require 'help.table'
-
 Room = require 'obj.room.Room'
 Hitbox = require 'obj.overworld.Hitbox'
 Player = require 'obj.overworld.Player'
@@ -14,13 +12,7 @@ cutscenes = require 'data.cutscenes'
 texts = require 'data.texts'
 
 class Overworld extends Room
-	new: (args = {}) =>
-		args = safe_copy({
-			map_name: ''
-			transition_name: nil
-			target_exit_id: nil
-		}, args)
-
+	new: (map_name, target_exit_id, transition_name) =>
 		super!
 
 		@background_colour = colours.b_black
@@ -40,17 +32,17 @@ class Overworld extends Room
 
 			pos: { x: 108, y: 48 }
 		})
-		@map = @add(Map, { world: @worlds.collision, path: args.map_name }, -1)
+		@map = @add(Map, { world: @worlds.collision, path: map_name }, -1)
 
 		with @map.cartographer
 			@camera\setWorld(0, 0, @map\get_dimensions!)
 
 		-- a transition added from the args table in new will always be
 		-- reversed
-		if args.transition_name then @add_transition(args.transition_name, true)
-		if args.target_exit_id
-			exit = @find_exit_with_id(args.target_exit_id)
-			if not exit then error("couldn't find exit with id #{args.target_exit_id}.")
+		if transition_name then @add_transition(transition_name, true)
+		if target_exit_id
+			exit = @find_exit_with_id(target_exit_id)
+			if not exit then error("couldn't find exit with id #{target_exit_id}.")
 			exit\move_player_to_this(@player)
 
 		@camera_controller\snap_to_destination!
@@ -73,5 +65,5 @@ class Overworld extends Room
 	add_text_box: (text_name) =>
 		return @add(TextBox, {
 			texts: texts[text_name]
-			is_bottom: not (@camera\toScreen(@player.pos.x, @player.pos.y) < SCREEN_HEIGHT / 2)
+			is_bottom: not (@camera\toScreen(@player.x, @player.y) < SCREEN_HEIGHT / 2)
 		}, 100)

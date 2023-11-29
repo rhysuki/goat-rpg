@@ -1,4 +1,3 @@
-import safe_copy from require 'help.table'
 import colour from require 'help.graphics'
 import tiny from require 'data.fonts'
 
@@ -8,28 +7,15 @@ colours = require 'data.colours'
 timer = require 'lib.timer'
 
 class Billboard extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
+	from_tiled_object: (room, object) =>
+		return @(room, room.pubsubs.test, object.properties.pubsub_event)
 
-		out.pubsub = room.pubsubs.test
-		out.pubsub_event = object.properties.pubsub_event
-
-		return out
-
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pubsub: nil
-			pubsub_event: ''
-		}, args)
-
-		super(room, args)
-
-		@pubsub = args.pubsub
-		@pubsub_event = args.pubsub_event
+	new: (room, @pubsub, @pubsub_event = '') =>
+		super(room)
 
 		@is_on = false
-		@w = 16 * 4
-		@h = (16 * 2) - 4
+		@width = 16 * 4
+		@height = (16 * 2) - 4
 		@colour = @copy_colour('b_black')
 
 		@timer = timer!
@@ -42,9 +28,9 @@ class Billboard extends GameObject
 
 	draw: =>
 		colour('b_white')
-		LG.rectangle('fill', @pos.x - 1, @pos.y - 1, @w + 2, @h + 2, 5, 5)
+		LG.rectangle('fill', @x - 1, @y - 1, @width + 2, @height + 2, 5, 5)
 		LG.setColor(@colour)
-		LG.rectangle('fill', @pos.x, @pos.y, @w, @h, 5, 5)
+		LG.rectangle('fill', @x, @y, @width, @height, 5, 5)
 
 		-- if @is_on then colour('b_green')
 		-- else colour('b_red')
@@ -55,21 +41,21 @@ class Billboard extends GameObject
 
 		LG.print(
 			texts[1]
-			@pos.x + (@w / 2) - (widths[1] / 2)
-			@pos.y - 2
+			@x + (@width / 2) - (widths[1] / 2)
+			@y - 2
 		)
 
 		LG.print(
 			texts[2]
-			@pos.x + (@w / 2) - (widths[2] / 2)
-			@pos.y + 6
+			@x + (@width / 2) - (widths[2] / 2)
+			@y + 6
 		)
 
 		colour(@is_on and 'b_green' or 'b_red')
 		LG.print(
 			texts[3]
-			@pos.x + (@w / 2) - (widths[3] / 2)
-			@pos.y + 14
+			@x + (@width / 2) - (widths[3] / 2)
+			@y + 14
 		)
 		colour!
 

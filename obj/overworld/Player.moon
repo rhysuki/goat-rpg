@@ -1,21 +1,11 @@
 import colour from require 'help.graphics'
-import safe_copy from require 'help.table'
 import is from require 'help.type'
 
 Actor = require 'obj.overworld.Actor'
-Hitbox = require 'obj.overworld.Hitbox'
-AreaTrigger = require 'obj.overworld.AreaTrigger'
-Peachy = require 'obj.Peachy'
-Interactible = require 'obj.overworld.Interactible'
 
 class Player extends Actor
-	new: (room, args = {}) =>
-		args = safe_copy({
-			interaction_world: nil
-			actor_name: 'goat'
-		}, args)
-
-		super(room, args)
+	new: (room, sprite, hitbox, area_trigger) =>
+		super(room, sprite, hitbox, area_trigger)
 
 		@is_input_enabled = true
 		-- the actual values used for movement logic. they don't reset
@@ -30,9 +20,9 @@ class Player extends Actor
 
 		@input = @room.input
 
-		@camera_target = @room.camera_controller\add_target(@pos.x, @pos.y)
+		@camera_target = @room.camera_controller\add_target(@x, @y)
 
-		@area_trigger\set_dimensions(@hitbox.pos.w, @hitbox.pos.h)
+		@area_trigger\set_dimensions(@hitbox.width, @hitbox.height)
 
 	update: (dt) =>
 		super(dt)
@@ -47,41 +37,41 @@ class Player extends Actor
 
 		@check_interactibles!
 
-		@camera_target.x, @camera_target.y = @pos.x + 6, @pos.y
+		@camera_target.x, @camera_target.y = @x + 6, @y
 
 	draw: =>
 		super!
 
 		if DEBUG_FLAGS.show_positions
 			colour('test_blue')
-			LG.print("x: #{@pos.x}\ny: #{@pos.y}", @pos.x, @pos.y + 3)
+			LG.print("x: #{@x}\ny: #{@y}", @x, @y + 3)
 			colour!
 
 	--
 
 	set_position: (x, y) =>
 		super(x, y)
-		@camera_target.x, @camera_target.y = @pos.x, @pos.y
+		@camera_target.x, @camera_target.y = @x, @y
 
 	set_move: (x, y) =>
 		@move_x, @move_y = x, y
 
 	move: (dt) =>
-		@pos.x += (@move_x * @speed * dt * 60)
-		@pos.y += (@move_y * @speed * dt * 60)
+		@x += (@move_x * @speed * dt * 60)
+		@y += (@move_y * @speed * dt * 60)
 
-		@hitbox\move_to(@pos.x, @pos.y)
+		@hitbox\move_to(@x, @y)
 
-		@pos.x = @hitbox.pos.x
-		@pos.y = @hitbox.pos.y
+		@x = @hitbox.x
+		@y = @hitbox.y
 
 	move_area_trigger: =>
 		super!
 
 		-- place the area trigger at the foot of this hitbox
 		@area_trigger\move_to(
-			@hitbox.pos.x
-			@hitbox.pos.y + @hitbox.pos.h - @area_trigger.pos.h
+			@hitbox.x
+			@hitbox.y + @hitbox.height - @area_trigger.height
 		)
 
 	update_animation_state: =>

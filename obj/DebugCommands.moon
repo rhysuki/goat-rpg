@@ -3,8 +3,8 @@ GameObject = require 'obj.GameObject'
 baton = require 'lib.baton'
 
 class DebugCommands extends GameObject
-	new: (room, args = {}) =>
-		super(room, args)
+	new: (room) =>
+		super(room)
 
 		@input = @room.input
 

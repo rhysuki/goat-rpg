@@ -98,8 +98,10 @@ love.keypressed = (k) ->
 	if DEBUG_FLAGS.ctrl_to_debug
 		if k == 'lctrl' then debug.debug!
 
+	-- TODO: add a debug flag for this or rename escape_to_reset
 	if DEBUG_FLAGS.escape_to_reset
 		if k == 'escape' then L.event.quit('restart')
+		if k == 'q' then L.event.quit!
 
 love.quit = ->
 	prof.write('default_prof_out.kprof')

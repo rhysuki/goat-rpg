@@ -1,85 +1,78 @@
-import safe_copy from require 'help.table'
 import colour from require 'help.graphics'
 
 GameObject = require 'obj.GameObject'
 
 class Hitbox extends GameObject
-	tiled_object_to_args: (room, object) =>
-		out = super(room, object)
+	from_tiled_object: (room, object) =>
+		obj = with @(room, room.worlds.collision)
+			\set_dimensions(object.width, object.height)
 
-		out.pos.w = object.width
-		out.pos.h = object.height
+		return obj
 
-		out.world = room.worlds[object.properties.world] or
-			room.worlds.collision
+	new: (room, @world) =>
+		super(room)
 
-		return out
+		@width = 16
+		@height = 16
 
-	new: (room, args = {}) =>
-		args = safe_copy({
-			pos: {
-				x: 0
-				y: 0
-				w: 16
-				h: 16
-			}
-
-			world: nil
-			filter: -> 'slide'
-			-- list of strings
-			tags: nil
-
-			context: nil
-		}, args)
-
-		super(room, args)
-
-		@world = args.world
-		@filter = args.filter
-		-- the object this belongs to, if any.
-		@context = args.context
-
+		@filter = -> 'slide'
 		@debug_colour = 'white'
 		@debug_alpha = 0.5
 		@cols = {}
-		@tags = @create_tags_table(args.tags)
 
-		@world\add(@, @pos.x, @pos.y, @pos.w, @pos.h)
+		@current_others = {}
+		@last_others = {}
+
+		@world\add(@, @x, @y, @width, @height)
+
+	update: (dt) =>
+		@last_others = { col.other, true for col in *@cols }
+		@cols = @check_collisions!
+		@current_others = { col.other, true for col in *@cols }
+
+		for col in *@cols
+			if (not @last_others[col.other]) and (@current_others[col.other])
+				@on_enter(col.other)
+
+			@on_stay(col.other)
+
+		for other in pairs @last_others
+			if not @current_others[other] then @on_exit(other)
 
 	draw: =>
 		if DEBUG_FLAGS.show_hitboxes
 			colour(@debug_colour, @debug_alpha)
-			LG.rectangle('line', @pos.x, @pos.y, @pos.w, @pos.h)
+			LG.rectangle('line', @world\getRect(@))
 			colour!
 
 	--
 
-	move_to: (x, y) =>
-		@pos.x, @pos.y, cols = @world\move(@, x, y, @filter)
-		@cols = cols
+	on_enter: (other) =>
+
+	on_stay: (other) =>
+
+	on_exit: (other) =>
 
 	set_position: (x, y) =>
-		@pos.x, @pos.y = x, y
-		@world\update(@, @pos.x, @pos.y)
+		super(x, y)
+		@world\update(@, @x, @y)
 
 	set_dimensions: (w, h) =>
-		@pos.w, @pos.h = w, h
-		@world\update(@, @pos.x, @pos.y, @pos.w, @pos.h)
+		@width, @height = w, h
+		@world\update(@, @x, @y, @width, @height)
+
+	move_to: (x, y) =>
+		@x, @y, cols = @world\move(@, x, y, @filter)
+		@cols = cols
 
 	die: =>
 		super!
 		@world\remove(@)
 
+	set_filter: (str) =>
+		@filter = -> str
+
 	-- @treturn tab
-	create_tags_table: (tags = {}) =>
-		out = {}
-
-		for tag in *tags
-			out[tag] = true
-
-		return out
-
-	-- @treturn boolean
-	has_tag: (tag) =>
-		if @tags[tag] then return true
-		return false
+	check_collisions: =>
+		_, _, cols = @world\check(@, @x, @y, @filter)
+		return cols
