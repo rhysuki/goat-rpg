@@ -1,14 +1,29 @@
 -- an AreaTrigger that emits an event when interacted with.
+import create_actor_instances from require 'help.object'
 
 Actor = require 'obj.overworld.Actor'
 
 class Interactible extends Actor
 	from_tiled_object: (room, object) =>
 		with object.properties
-			return @(room, room.pubsubs[.pubsub], .pubsub_event)
+			sprite, hitbox, area_trigger = create_actor_instances(
+				room
+				.actor_name
+				room.worlds.collision
+				room.worlds.interaction
+			)
 
-	new: (room, @pubsub, @pubsub_event) =>
-		super(room)
+			return @(
+				room
+				room.pubsubs[.pubsub]
+				.pubsub_event
+				sprite
+				hitbox
+				area_trigger
+			)
+
+	new: (room, @pubsub, @pubsub_event, sprite, hitbox, area_trigger) =>
+		super(room, sprite, hitbox, area_trigger)
 
 	--
 
