@@ -1,11 +1,11 @@
-AreaTrigger = require 'obj.overworld.AreaTrigger'
+Hitbox = require 'obj.overworld.Hitbox'
 
 timer = require 'lib.timer'
 colours = require 'data.colours'
 
-class FlashyAreaTrigger extends AreaTrigger
-	new: (room) =>
-		super(room)
+class FlashyAreaTrigger extends Hitbox
+	new: (room, world) =>
+		super(room, world)
 		@timer = timer!
 		@colour = @get_colour('b_purple')
 
