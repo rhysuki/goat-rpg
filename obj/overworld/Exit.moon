@@ -1,16 +1,18 @@
 import is from require 'help.type'
 
-EmptyRoom = require 'obj.room.test.Empty'
-Player = require 'obj.overworld.Player'
 Overworld = require 'obj.room.Overworld'
+EmptyRoom = require 'obj.room.test.Empty'
 CircleTransition = require 'obj.room.transition.CircleTransition'
+Player = require 'obj.overworld.Player'
+Hitbox = require 'obj.overworld.Hitbox'
 
 -- TODO: walking animation and right positioning
-class Exit extends AreaTrigger
+class Exit extends Hitbox
 	from_tiled_object: (room, object) =>
 		with object.properties
 			return @(
 				room
+				room.worlds.interaction
 				.exit_id
 				.target_exit_id
 				.target_room_name
@@ -18,8 +20,8 @@ class Exit extends AreaTrigger
 				.transition_name
 			)
 
-	new: (room, @exit_id, @target_exit_id, @target_room_name, @direction, @transition_name) =>
-		super(room)
+	new: (room, world, @exit_id, @target_exit_id, @target_room_name, @direction, @transition_name) =>
+		super(room, world)
 		@is_exit_enabled = true
 
 	--
